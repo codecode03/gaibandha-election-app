@@ -19,10 +19,10 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="dark" />
+      <StatusBar style="light" backgroundColor="#059669" />
       
       <ScrollView 
-        style={styles.scrollView}
+        style={styles.scrollViewContainer}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
@@ -87,10 +87,11 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0fdf4', // Light green background
+    backgroundColor: '#059669', // Green for status bar area
   },
-  scrollView: {
+  scrollViewContainer: {
     flex: 1,
+    backgroundColor: '#f0fdf4', // Light green for content
   },
   scrollContent: {
     paddingBottom: 40,

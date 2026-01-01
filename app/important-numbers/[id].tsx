@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Linking } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -100,6 +100,7 @@ const CONTACTS_DATA: Record<string, {
 };
 
 export default function ImportantNumbersScreen() {
+  const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id: string }>();
   const data = CONTACTS_DATA[id || '29'];
 
@@ -117,18 +118,18 @@ export default function ImportantNumbersScreen() {
 
   if (!data) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={[styles.container, { backgroundColor: '#059669' }]}>
         <Text>Data not found</Text>
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="light" />
+    <View style={[styles.container, { backgroundColor: data.color }]}>
+      <StatusBar style="light" backgroundColor={data.color} />
 
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: data.color }]}>
+      <View style={[styles.header, { backgroundColor: data.color, paddingTop: insets.top + 8 }]}>
         <Pressable
           style={({ pressed }) => [
             styles.backButton,
@@ -151,7 +152,7 @@ export default function ImportantNumbersScreen() {
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 40 }]}
         showsVerticalScrollIndicator={false}
       >
         {/* Info */}
@@ -193,18 +194,17 @@ export default function ImportantNumbersScreen() {
           </Pressable>
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#059669',
   },
   header: {
     paddingHorizontal: 20,
-    paddingTop: 8,
     paddingBottom: 24,
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    backgroundColor: '#f0fdf4', // Light green for content
   },
   scrollContent: {
     paddingHorizontal: 20,
@@ -315,4 +316,7 @@ const styles = StyleSheet.create({
     marginLeft: 6,
   },
 });
+
+
+
 

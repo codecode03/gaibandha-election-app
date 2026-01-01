@@ -71,8 +71,8 @@ export default function SplashScreen() {
   const imageHeight = height * 0.90; // 90% of screen height
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
-      <StatusBar style="dark" />
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+      <StatusBar style="dark" backgroundColor="#ffffff" />
       
       {/* Main Loading Image with Logo and Map */}
       <View style={styles.imageSection}>

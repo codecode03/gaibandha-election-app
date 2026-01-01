@@ -3,7 +3,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Linking, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Risk level types
 type RiskLevel = 'high' | 'medium' | 'normal';
@@ -174,6 +174,7 @@ const CONSTITUENCY_COLORS: Record<string, string> = {
 };
 
 export default function CenterDetailsScreen() {
+  const insets = useSafeAreaInsets();
   const { centerId } = useLocalSearchParams<{ centerId: string }>();
   
   // Parse centerId format: "constituencyId-centerId" e.g., "29-1"
@@ -196,7 +197,7 @@ export default function CenterDetailsScreen() {
   };
 
   const handleViewLocation = () => {
-    const { latitude, longitude, name } = center;
+    const { latitude, longitude, name } = center!;
     const label = encodeURIComponent(name);
     
     // Open Google Maps with directions from current location
@@ -211,20 +212,20 @@ export default function CenterDetailsScreen() {
 
   if (!center) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={[styles.container, { backgroundColor: themeColor }]}>
         <Text>কেন্দ্র পাওয়া যায়নি</Text>
-      </SafeAreaView>
+      </View>
     );
   }
 
   const riskStyle = RISK_COLORS[center.riskLevel];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="light" />
+    <View style={[styles.container, { backgroundColor: themeColor }]}>
+      <StatusBar style="light" backgroundColor={themeColor} />
 
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: themeColor }]}>
+      <View style={[styles.header, { backgroundColor: themeColor, paddingTop: insets.top + 8 }]}>
         <Pressable
           style={({ pressed }) => [
             styles.backButton,
@@ -246,7 +247,7 @@ export default function CenterDetailsScreen() {
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 40 }]}
         showsVerticalScrollIndicator={false}
       >
         {/* Center Info Card */}
@@ -523,18 +524,17 @@ export default function CenterDetailsScreen() {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#059669',
   },
   header: {
     paddingHorizontal: 20,
-    paddingTop: 8,
     paddingBottom: 24,
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
@@ -568,6 +568,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    backgroundColor: '#f0fdf4', // Light green for content
   },
   scrollContent: {
     paddingHorizontal: 20,

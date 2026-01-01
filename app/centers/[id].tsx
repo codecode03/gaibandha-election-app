@@ -3,7 +3,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Risk level types
 type RiskLevel = 'high' | 'medium' | 'normal';
@@ -103,6 +103,7 @@ const RISK_COLORS: Record<RiskLevel, { bg: string; text: string; border: string 
 type FilterType = 'all' | RiskLevel;
 
 export default function CentersListScreen() {
+  const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id: string }>();
   const data = CENTERS_DATA[id || '29'];
 
@@ -151,18 +152,18 @@ export default function CentersListScreen() {
 
   if (!data) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={[styles.container, { backgroundColor: '#059669' }]}>
         <Text>Data not found</Text>
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="light" />
+    <View style={[styles.container, { backgroundColor: data.color }]}>
+      <StatusBar style="light" backgroundColor={data.color} />
 
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: data.color }]}>
+      <View style={[styles.header, { backgroundColor: data.color, paddingTop: insets.top + 8 }]}>
         <Pressable
           style={({ pressed }) => [
             styles.backButton,
@@ -238,29 +239,31 @@ export default function CentersListScreen() {
       </View>
 
       {/* Search Input */}
-      <View style={[styles.searchContainer, { borderColor: data.color }]}>
-        <Ionicons name="search" size={22} color={data.color} />
-        <TextInput
-          ref={searchInputRef}
-          style={styles.searchInput}
-          placeholder="কেন্দ্র নম্বর বা নাম লিখুন..."
-          placeholderTextColor="#888"
-          value={searchText}
-          onChangeText={handleSearchChange}
-          autoCapitalize="none"
-          autoCorrect={false}
-          returnKeyType="search"
-          keyboardType="default"
-          textContentType="none"
-          autoComplete="off"
-          importantForAutofill="no"
-          onSubmitEditing={() => Keyboard.dismiss()}
-        />
-        {searchText.length > 0 && (
-          <Pressable onPress={handleClearSearch} hitSlop={12}>
-            <Ionicons name="close-circle" size={22} color="#999" />
-          </Pressable>
-        )}
+      <View style={styles.searchWrapper}>
+        <View style={[styles.searchContainer, { borderColor: data.color }]}>
+          <Ionicons name="search" size={22} color={data.color} />
+          <TextInput
+            ref={searchInputRef}
+            style={styles.searchInput}
+            placeholder="কেন্দ্র নম্বর বা নাম লিখুন..."
+            placeholderTextColor="#888"
+            value={searchText}
+            onChangeText={handleSearchChange}
+            autoCapitalize="none"
+            autoCorrect={false}
+            returnKeyType="search"
+            keyboardType="default"
+            textContentType="none"
+            autoComplete="off"
+            importantForAutofill="no"
+            onSubmitEditing={() => Keyboard.dismiss()}
+          />
+          {searchText.length > 0 && (
+            <Pressable onPress={handleClearSearch} hitSlop={12}>
+              <Ionicons name="close-circle" size={22} color="#999" />
+            </Pressable>
+          )}
+        </View>
       </View>
 
       {/* Results Count */}
@@ -272,7 +275,7 @@ export default function CentersListScreen() {
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 40 }]}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
@@ -326,18 +329,17 @@ export default function CentersListScreen() {
           </View>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#059669',
   },
   header: {
     paddingHorizontal: 20,
-    paddingTop: 8,
     paddingBottom: 24,
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
@@ -377,6 +379,7 @@ const styles = StyleSheet.create({
   filterContainer: {
     paddingHorizontal: 16,
     paddingVertical: 12,
+    backgroundColor: '#f0fdf4',
   },
   filterButton: {
     paddingHorizontal: 18,
@@ -392,11 +395,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#666',
   },
+  searchWrapper: {
+    backgroundColor: '#f0fdf4',
+    paddingHorizontal: 20,
+    paddingVertical: 0,
+  },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    marginHorizontal: 20,
     paddingHorizontal: 14,
     paddingVertical: 12,
     borderRadius: 14,
@@ -418,6 +425,7 @@ const styles = StyleSheet.create({
   resultsCount: {
     paddingHorizontal: 20,
     paddingVertical: 12,
+    backgroundColor: '#f0fdf4',
   },
   resultsCountText: {
     fontSize: 15,
@@ -426,6 +434,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    backgroundColor: '#f0fdf4', // Light green for content
   },
   scrollContent: {
     paddingHorizontal: 20,

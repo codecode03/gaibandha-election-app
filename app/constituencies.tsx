@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -75,6 +75,8 @@ const CONSTITUENCIES = [
 ];
 
 export default function ConstituenciesScreen() {
+  const insets = useSafeAreaInsets();
+  
   const handleConstituencyPress = (id: string) => {
     router.push(`/constituency/${id}`);
   };
@@ -88,11 +90,11 @@ export default function ConstituenciesScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="light" />
+    <View style={styles.container}>
+      <StatusBar style="light" backgroundColor="#059669" />
 
-      {/* Header */}
-      <View style={styles.header}>
+      {/* Header with safe area padding */}
+      <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
         <Pressable 
           style={({ pressed }) => [
             styles.backButton,
@@ -118,7 +120,7 @@ export default function ConstituenciesScreen() {
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 40 }]}
         showsVerticalScrollIndicator={false}
       >
         {/* Instruction */}
@@ -150,19 +152,18 @@ export default function ConstituenciesScreen() {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#059669', // Green for status bar area
   },
   header: {
     backgroundColor: '#059669',
     paddingHorizontal: 20,
-    paddingTop: 8,
     paddingBottom: 24,
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
@@ -202,6 +203,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    backgroundColor: '#f0fdf4', // Light green for content
   },
   scrollContent: {
     paddingHorizontal: 20,

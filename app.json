@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gaibandha.electionapp"
     },
     "android": {
       "package": "com.gaibandha.electionapp",
@@ -17,7 +18,7 @@
         "backgroundColor": "#ffffff",
         "foregroundImage": "./assets/images/logo.png"
       },
-      "edgeToEdgeEnabled": true,
+      "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -30,11 +31,13 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/loading.png",
-          "imageWidth": 450,
+          "imageWidth": 280,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
-            "backgroundColor": "#000000"
+            "image": "./assets/images/loading.png",
+            "imageWidth": 280,
+            "backgroundColor": "#ffffff"
           }
         }
       ]
@@ -49,6 +52,12 @@
         "projectId": "1bd88fe8-1c26-45be-9afa-8bfcdb511d1d"
       }
     },
-    "owner": "code-code"
+    "owner": "code-code",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/1bd88fe8-1c26-45be-9afa-8bfcdb511d1d"
+    }
   }
 }
