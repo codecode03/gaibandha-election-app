@@ -16,7 +16,7 @@
       "package": "com.gaibandha.electionapp",
       "adaptiveIcon": {
         "backgroundColor": "#ffffff",
-        "foregroundImage": "./assets/images/logo.png"
+        "foregroundImage": "./assets/images/adaptive-icon.png"
       },
       "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false
