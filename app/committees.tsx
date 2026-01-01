@@ -222,13 +222,13 @@ const styles = StyleSheet.create({
     marginLeft: 14,
   },
   menuTitle: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '700',
     color: '#1f2937',
     marginBottom: 4,
   },
   menuSubtitle: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#9ca3af',
   },
   menuArrow: {

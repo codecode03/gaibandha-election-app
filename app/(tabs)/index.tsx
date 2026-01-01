@@ -163,7 +163,7 @@ export default function HomeScreen() {
         {/* Menu Section */}
         <View style={styles.menuSection}>
           <View style={styles.menuHeader}>
-            <Ionicons name="grid" size={20} color="#059669" />
+            <Ionicons name="grid" size={16} color="#059669" />
             <Text style={styles.menuHeaderTitle}>সেবা সমূহ</Text>
           </View>
           
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     maxWidth: 80,
   },
   dcLabel: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#9ca3af',
   },
   dcPhotoWrapper: {
@@ -387,20 +387,20 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   dcName: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '700',
     color: '#1f2937',
     textAlign: 'center',
     marginBottom: 4,
   },
   dcDesignation: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#6b7280',
     textAlign: 'center',
     marginBottom: 3,
   },
   dcLocation: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '600',
     color: '#059669',
   },
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   menuHeaderTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
     color: '#1e293b',
     letterSpacing: 0.3,

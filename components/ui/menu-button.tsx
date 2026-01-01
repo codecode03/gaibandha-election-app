@@ -81,12 +81,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   title: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '700',
     color: '#1a1a1a',
   },
   subtitle: {
-    fontSize: 13,
+    fontSize: 12,
     color: '#888',
     marginTop: 2,
   },
