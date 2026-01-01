@@ -3,7 +3,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Risk level types
 type RiskLevel = 'high' | 'medium' | 'normal';
@@ -26,7 +26,7 @@ const CENTERS_DATA: Record<string, {
   '29': {
     code: '২৯-গাইবান্ধা-০১',
     areaName: 'সুন্দরগঞ্জ',
-    color: '#059669',
+    color: '#047857',
     centers: [
       { id: '1', number: '০১', name: 'সুন্দরগঞ্জ পাইলট উচ্চ বিদ্যালয়', riskLevel: 'high' },
       { id: '2', number: '০২', name: 'সুন্দরগঞ্জ সরকারি প্রাথমিক বিদ্যালয়', riskLevel: 'medium' },
@@ -43,7 +43,7 @@ const CENTERS_DATA: Record<string, {
   '30': {
     code: '৩০-গাইবান্ধা-০২',
     areaName: 'গাইবান্ধা সদর',
-    color: '#dc2626',
+    color: '#b91c1c',
     centers: [
       { id: '1', number: '০১', name: 'গাইবান্ধা সরকারি উচ্চ বিদ্যালয়', riskLevel: 'high' },
       { id: '2', number: '০২', name: 'গাইবান্ধা সরকারি বালিকা উচ্চ বিদ্যালয়', riskLevel: 'medium' },
@@ -55,7 +55,7 @@ const CENTERS_DATA: Record<string, {
   '31': {
     code: '৩১-গাইবান্ধা-০৩',
     areaName: 'পলাশবাড়ী ও সাদুল্লাপুর',
-    color: '#7c3aed',
+    color: '#6d28d9',
     centers: [
       { id: '1', number: '০১', name: 'পলাশবাড়ী পাইলট উচ্চ বিদ্যালয়', riskLevel: 'high' },
       { id: '2', number: '০২', name: 'সাদুল্লাপুর সরকারি উচ্চ বিদ্যালয়', riskLevel: 'high' },
@@ -64,10 +64,36 @@ const CENTERS_DATA: Record<string, {
       { id: '5', number: '০৫', name: 'কিশোরগাড়ি উচ্চ বিদ্যালয়', riskLevel: 'medium' },
     ],
   },
+  // Palashbari Upazila (গাইবান্ধা-০৩)
+  '31-palashbari': {
+    code: '৩১-গাইবান্ধা-০৩',
+    areaName: 'পলাশবাড়ী',
+    color: '#6d28d9',
+    centers: [
+      { id: '1', number: '০১', name: 'পলাশবাড়ী পাইলট উচ্চ বিদ্যালয়', riskLevel: 'high' },
+      { id: '2', number: '০২', name: 'পলাশবাড়ী সরকারি প্রাথমিক বিদ্যালয়', riskLevel: 'medium' },
+      { id: '3', number: '০৩', name: 'পলাশবাড়ী বালিকা উচ্চ বিদ্যালয়', riskLevel: 'medium' },
+      { id: '4', number: '০৪', name: 'কিশোরগাড়ি উচ্চ বিদ্যালয়', riskLevel: 'normal' },
+      { id: '5', number: '০৫', name: 'পলাশবাড়ী ইউনিয়ন পরিষদ', riskLevel: 'high' },
+    ],
+  },
+  // Sadullapur Upazila (গাইবান্ধা-০৩)
+  '31-sadullapur': {
+    code: '৩১-গাইবান্ধা-০৩',
+    areaName: 'সাদুল্লাপুর',
+    color: '#6d28d9',
+    centers: [
+      { id: '1', number: '০১', name: 'সাদুল্লাপুর সরকারি উচ্চ বিদ্যালয়', riskLevel: 'high' },
+      { id: '2', number: '০২', name: 'সাদুল্লাপুর প্রাথমিক বিদ্যালয়', riskLevel: 'medium' },
+      { id: '3', number: '০৩', name: 'সাদুল্লাপুর বালিকা উচ্চ বিদ্যালয়', riskLevel: 'normal' },
+      { id: '4', number: '০৪', name: 'নলডাঙ্গা উচ্চ বিদ্যালয়', riskLevel: 'medium' },
+      { id: '5', number: '০৫', name: 'সাদুল্লাপুর ইউনিয়ন পরিষদ', riskLevel: 'high' },
+    ],
+  },
   '32': {
     code: '৩২-গাইবান্ধা-০৪',
     areaName: 'গোবিন্দগঞ্জ',
-    color: '#0891b2',
+    color: '#0e7490',
     centers: [
       { id: '1', number: '০১', name: 'গোবিন্দগঞ্জ পাইলট উচ্চ বিদ্যালয়', riskLevel: 'high' },
       { id: '2', number: '০২', name: 'গোবিন্দগঞ্জ সরকারি প্রাথমিক বিদ্যালয়', riskLevel: 'medium' },
@@ -78,12 +104,36 @@ const CENTERS_DATA: Record<string, {
   '33': {
     code: '৩৩-গাইবান্ধা-০৫',
     areaName: 'সাঘাটা ও ফুলছড়ি',
-    color: '#ea580c',
+    color: '#c2410c',
     centers: [
       { id: '1', number: '০১', name: 'সাঘাটা সরকারি উচ্চ বিদ্যালয়', riskLevel: 'high' },
       { id: '2', number: '০২', name: 'ফুলছড়ি উচ্চ বিদ্যালয়', riskLevel: 'medium' },
       { id: '3', number: '০৩', name: 'সাঘাটা সরকারি প্রাথমিক বিদ্যালয়', riskLevel: 'normal' },
       { id: '4', number: '০৪', name: 'ফুলছড়ি প্রাথমিক বিদ্যালয়', riskLevel: 'normal' },
+    ],
+  },
+  // Saghata Upazila (গাইবান্ধা-০৫)
+  '33-saghata': {
+    code: '৩৩-গাইবান্ধা-০৫',
+    areaName: 'সাঘাটা',
+    color: '#c2410c',
+    centers: [
+      { id: '1', number: '০১', name: 'সাঘাটা সরকারি উচ্চ বিদ্যালয়', riskLevel: 'high' },
+      { id: '2', number: '০২', name: 'সাঘাটা সরকারি প্রাথমিক বিদ্যালয়', riskLevel: 'medium' },
+      { id: '3', number: '০৩', name: 'সাঘাটা বালিকা উচ্চ বিদ্যালয়', riskLevel: 'normal' },
+      { id: '4', number: '০৪', name: 'কামালপুর উচ্চ বিদ্যালয়', riskLevel: 'normal' },
+    ],
+  },
+  // Fulchari Upazila (গাইবান্ধা-০৫)
+  '33-fulchari': {
+    code: '৩৩-গাইবান্ধা-০৫',
+    areaName: 'ফুলছড়ি',
+    color: '#c2410c',
+    centers: [
+      { id: '1', number: '০১', name: 'ফুলছড়ি উচ্চ বিদ্যালয়', riskLevel: 'high' },
+      { id: '2', number: '০২', name: 'ফুলছড়ি প্রাথমিক বিদ্যালয়', riskLevel: 'medium' },
+      { id: '3', number: '০৩', name: 'ফুলছড়ি বালিকা বিদ্যালয়', riskLevel: 'normal' },
+      { id: '4', number: '০৪', name: 'এড়াবিল উচ্চ বিদ্যালয়', riskLevel: 'normal' },
     ],
   },
 };
@@ -103,7 +153,6 @@ const RISK_COLORS: Record<RiskLevel, { bg: string; text: string; border: string 
 type FilterType = 'all' | RiskLevel;
 
 export default function CentersListScreen() {
-  const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id: string }>();
   const data = CENTERS_DATA[id || '29'];
 
@@ -152,41 +201,35 @@ export default function CentersListScreen() {
 
   if (!data) {
     return (
-      <View style={[styles.container, { backgroundColor: '#059669' }]}>
-        <Text>Data not found</Text>
-      </View>
+      <SafeAreaView style={[styles.container, { backgroundColor: '#065f46' }]} edges={['top']}>
+        <Text style={{ color: '#fff', textAlign: 'center', marginTop: 50 }}>Data not found</Text>
+      </SafeAreaView>
     );
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: data.color }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: data.color }]} edges={['top']}>
       <StatusBar style="light" backgroundColor={data.color} />
 
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: data.color, paddingTop: insets.top + 8 }]}>
+      <View style={styles.header}>
         <Pressable
-          style={({ pressed }) => [
-            styles.backButton,
-            pressed && styles.backButtonPressed,
-          ]}
+          style={styles.backButton}
           onPress={handleBack}
-          accessibilityRole="button"
-          accessibilityLabel="ফিরে যান"
         >
-          <Ionicons name="arrow-back" size={22} color="#ffffff" />
-          <Text style={styles.backText}>ফিরে যান</Text>
+          <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
-
         <View style={styles.headerTitleContainer}>
-          <Ionicons name="business" size={28} color="#ffffff" />
           <Text style={styles.headerTitle}>কেন্দ্র সমূহ</Text>
           <Text style={styles.headerSubtitle}>{data.code} • {data.areaName}</Text>
         </View>
+        <View style={styles.headerRight} />
       </View>
 
-      {/* Filter Buttons */}
-      <View style={styles.filterContainer}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+      {/* Filter & Search Section */}
+      <View style={styles.filterSearchSection}>
+        {/* Filter Buttons */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={styles.filterContainer}>
           <Pressable
             style={[
               styles.filterButton,
@@ -236,10 +279,8 @@ export default function CentersListScreen() {
             ]}>সাধারণ</Text>
           </Pressable>
         </ScrollView>
-      </View>
 
-      {/* Search Input */}
-      <View style={styles.searchWrapper}>
+        {/* Search Input */}
         <View style={[styles.searchContainer, { borderColor: data.color }]}>
           <Ionicons name="search" size={22} color={data.color} />
           <TextInput
@@ -264,10 +305,8 @@ export default function CentersListScreen() {
             </Pressable>
           )}
         </View>
-      </View>
 
-      {/* Results Count */}
-      <View style={styles.resultsCount}>
+        {/* Results Count */}
         <Text style={styles.resultsCountText}>
           মোট {filteredCenters.length} টি কেন্দ্র পাওয়া গেছে
         </Text>
@@ -275,7 +314,7 @@ export default function CentersListScreen() {
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 40 }]}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
@@ -328,58 +367,66 @@ export default function CentersListScreen() {
             <Text style={styles.emptyStateText}>কোনো কেন্দ্র পাওয়া যায়নি</Text>
           </View>
         )}
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            © {new Date().getFullYear()} জেলা প্রশাসন, গাইবান্ধা
+          </Text>
+        </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#059669',
+    backgroundColor: '#065f46',
   },
+  // Header
   header: {
-    paddingHorizontal: 20,
-    paddingBottom: 24,
-    borderBottomLeftRadius: 28,
-    borderBottomRightRadius: 28,
-  },
-  backButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 8,
-    paddingRight: 8,
-    marginBottom: 12,
-    borderRadius: 8,
-    alignSelf: 'flex-start',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
-  backButtonPressed: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  },
-  backText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-    marginLeft: 6,
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerTitleContainer: {
     alignItems: 'center',
+    flex: 1,
   },
   headerTitle: {
-    fontSize: 24,
-    fontWeight: '800',
+    fontSize: 18,
+    fontWeight: '700',
     color: '#ffffff',
-    marginTop: 8,
   },
   headerSubtitle: {
-    fontSize: 14,
+    fontSize: 13,
     color: 'rgba(255, 255, 255, 0.9)',
-    marginTop: 4,
+    marginTop: 2,
+  },
+  headerRight: {
+    width: 40,
+  },
+  // Filter & Search
+  filterSearchSection: {
+    backgroundColor: '#f0fdf4',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingTop: 16,
+    paddingHorizontal: 16,
   },
   filterContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#f0fdf4',
+    marginBottom: 12,
   },
   filterButton: {
     paddingHorizontal: 18,
@@ -394,11 +441,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: '#666',
-  },
-  searchWrapper: {
-    backgroundColor: '#f0fdf4',
-    paddingHorizontal: 20,
-    paddingVertical: 0,
   },
   searchContainer: {
     flexDirection: 'row',
@@ -422,23 +464,21 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     minHeight: 24,
   },
-  resultsCount: {
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    backgroundColor: '#f0fdf4',
-  },
   resultsCountText: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#666',
     fontWeight: '500',
+    marginTop: 12,
+    marginBottom: 12,
   },
+  // ScrollView
   scrollView: {
     flex: 1,
-    backgroundColor: '#f0fdf4', // Light green for content
+    backgroundColor: '#f0fdf4',
   },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 40,
+    paddingHorizontal: 16,
+    paddingBottom: 32,
   },
   tableHeader: {
     flexDirection: 'row',
@@ -505,5 +545,15 @@ const styles = StyleSheet.create({
     color: '#999',
     marginTop: 12,
   },
+  // Footer
+  footer: {
+    paddingVertical: 20,
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  footerText: {
+    fontSize: 12,
+    color: '#6b7280',
+    fontWeight: '500',
+  },
 });
-

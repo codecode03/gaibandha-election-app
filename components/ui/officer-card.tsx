@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageSourcePropType } from 'react-native';
+import { View, Text, StyleSheet, ImageSourcePropType, Pressable, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 
@@ -20,6 +20,14 @@ export function OfficerCard({
   color = '#059669',
   image,
 }: OfficerCardProps) {
+  const handleCall = () => {
+    if (mobile) {
+      // Remove any non-numeric characters except + for international format
+      const cleanNumber = mobile.replace(/[^0-9+]/g, '');
+      Linking.openURL(`tel:${cleanNumber}`);
+    }
+  };
+
   return (
     <View style={[styles.card, { borderColor: color }]}>
       {/* Header */}
@@ -50,10 +58,17 @@ export function OfficerCard({
           <Text style={styles.designation} numberOfLines={2}>{designation}</Text>
         ) : null}
         {mobile ? (
-          <View style={styles.mobileRow}>
-            <Ionicons name="call" size={14} color={color} />
-            <Text style={[styles.mobile, { color }]}>{mobile}</Text>
-          </View>
+          <Pressable 
+            style={({ pressed }) => [
+              styles.callButton,
+              { backgroundColor: color },
+              pressed && styles.callButtonPressed,
+            ]}
+            onPress={handleCall}
+          >
+            <Ionicons name="call" size={16} color="#ffffff" />
+            <Text style={styles.callButtonText}>{mobile}</Text>
+          </Pressable>
         ) : null}
       </View>
     </View>
@@ -124,16 +139,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 3,
   },
-  mobileRow: {
+  callButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 3,
-    flexWrap: 'wrap',
     justifyContent: 'center',
+    marginTop: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    gap: 6,
   },
-  mobile: {
-    fontSize: 12,
-    fontWeight: '600',
-    marginLeft: 4,
+  callButtonPressed: {
+    opacity: 0.8,
+    transform: [{ scale: 0.98 }],
+  },
+  callButtonText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#ffffff',
   },
 });

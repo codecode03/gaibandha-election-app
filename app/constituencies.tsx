@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -74,58 +74,70 @@ const CONSTITUENCIES = [
   },
 ];
 
-export default function ConstituenciesScreen() {
-  const insets = useSafeAreaInsets();
-  
-  const handleConstituencyPress = (id: string) => {
-    router.push(`/constituency/${id}`);
-  };
+// Constituencies that have multiple upazilas and need upazila selection
+const MULTI_UPAZILA_CONSTITUENCIES = ['31', '33'];
 
-  const handleBack = () => {
-    if (router.canGoBack()) {
-      router.back();
+export default function ConstituenciesScreen() {
+  const handleConstituencyPress = (id: string) => {
+    // For constituencies with multiple upazilas, go to upazila selection page
+    if (MULTI_UPAZILA_CONSTITUENCIES.includes(id)) {
+      router.push(`/upazila-select/${id}`);
     } else {
-      router.replace('/(tabs)');
+      router.push(`/constituency/${id}`);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" backgroundColor="#059669" />
-
-      {/* Header with safe area padding */}
-      <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <StatusBar style="light" backgroundColor="#065f46" />
+      
+      {/* Header */}
+      <View style={styles.header}>
         <Pressable 
-          style={({ pressed }) => [
-            styles.backButton,
-            pressed && styles.backButtonPressed
-          ]} 
-          onPress={handleBack}
-          accessibilityRole="button"
-          accessibilityLabel="ফিরে যান - Go back"
+          style={styles.backButton}
+          onPress={() => router.back()}
         >
-          {({ pressed }) => (
-            <>
-              <Ionicons name="arrow-back" size={22} color={pressed ? "#d1fae5" : "#ffffff"} />
-              <Text style={[styles.backText, pressed && styles.backTextPressed]}>ফিরে যান</Text>
-            </>
-          )}
+          <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
-        
-        <View style={styles.headerTitleContainer}>
-          <Text style={styles.headerTitle}>আসন সমূহ</Text>
-          <Text style={styles.headerSubtitle}>গাইবান্ধা জেলা • ৫টি আসন</Text>
-        </View>
+        <Text style={styles.headerTitle}>আসন সমূহ</Text>
+        <View style={styles.headerRight} />
       </View>
-
-      <ScrollView
+      
+      <ScrollView 
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 40 }]}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        {/* Info Card */}
+        <View style={styles.infoCard}>
+          <View style={styles.infoIconContainer}>
+            <Ionicons name="location" size={32} color="#059669" />
+          </View>
+          <Text style={styles.infoTitle}>গাইবান্ধা জেলার আসন সমূহ</Text>
+          <Text style={styles.infoSubtitle}>৫টি সংসদীয় আসনের বিস্তারিত তথ্য</Text>
+          
+          {/* Stats Row */}
+          <View style={styles.statsRow}>
+            <View style={styles.statItem}>
+              <Text style={styles.statValue}>৫</Text>
+              <Text style={styles.statLabel}>আসন</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.statItem}>
+              <Text style={styles.statValue}>৫২৮</Text>
+              <Text style={styles.statLabel}>কেন্দ্র</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.statItem}>
+              <Text style={styles.statValue}>২০,৭৬,৭৫৭</Text>
+              <Text style={styles.statLabel}>ভোটার</Text>
+            </View>
+          </View>
+        </View>
+
         {/* Instruction */}
-        <View style={styles.instructionContainer}>
-          <Ionicons name="information-circle" size={24} color="#059669" />
+        <View style={styles.instructionCard}>
+          <Ionicons name="hand-left" size={18} color="#0891b2" />
           <Text style={styles.instructionText}>
             যেকোনো আসনে ট্যাপ করে বিস্তারিত তথ্য দেখুন
           </Text>
@@ -151,84 +163,154 @@ export default function ConstituenciesScreen() {
             />
           ))}
         </View>
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>© ২০২৫ গাইবান্ধা জেলা প্রশাসন</Text>
+        </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#059669', // Green for status bar area
+    backgroundColor: '#065f46',
   },
+  
+  // Header
   header: {
-    backgroundColor: '#059669',
-    paddingHorizontal: 20,
-    paddingBottom: 24,
-    borderBottomLeftRadius: 28,
-    borderBottomRightRadius: 28,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    backgroundColor: '#065f46',
   },
   backButton: {
-    flexDirection: 'row',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.15)',
     alignItems: 'center',
-    paddingVertical: 8,
-    paddingRight: 8,
-    marginBottom: 8,
-    borderRadius: 8,
-  },
-  backButtonPressed: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  },
-  backText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-    marginLeft: 6,
-  },
-  backTextPressed: {
-    color: '#d1fae5',
-  },
-  headerTitleContainer: {
-    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerTitle: {
-    fontSize: 28,
-    fontWeight: '800',
+    fontSize: 18,
+    fontWeight: '700',
     color: '#ffffff',
   },
-  headerSubtitle: {
-    fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.9)',
-    marginTop: 4,
+  headerRight: {
+    width: 40,
   },
+  
+  // ScrollView
   scrollView: {
     flex: 1,
-    backgroundColor: '#f0fdf4', // Light green for content
+    backgroundColor: '#f0fdf4',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
   },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 40,
+    padding: 16,
+    paddingBottom: 32,
   },
-  instructionContainer: {
+
+  // Info Card
+  infoCard: {
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    padding: 24,
+    alignItems: 'center',
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  infoIconContainer: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#ecfdf5',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  infoTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1f2937',
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  infoSubtitle: {
+    fontSize: 14,
+    color: '#6b7280',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  statsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    backgroundColor: '#f9fafb',
     borderRadius: 12,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#d1fae5',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    width: '100%',
+  },
+  statItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  statValue: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#059669',
+  },
+  statLabel: {
+    fontSize: 12,
+    color: '#6b7280',
+    marginTop: 2,
+  },
+  statDivider: {
+    width: 1,
+    height: 30,
+    backgroundColor: '#e5e7eb',
+  },
+
+  // Instruction Card
+  instructionCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ecfeff',
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 16,
+    gap: 10,
   },
   instructionText: {
-    fontSize: 15,
-    color: '#065f46',
-    marginLeft: 12,
     flex: 1,
+    fontSize: 13,
+    color: '#0891b2',
     fontWeight: '500',
   },
+
+  // Cards Container
   cardsContainer: {
-    // gap handled by card marginBottom
+    gap: 12,
+  },
+
+  // Footer
+  footer: {
+    alignItems: 'center',
+    paddingVertical: 20,
+    marginTop: 8,
+  },
+  footerText: {
+    fontSize: 12,
+    color: '#9ca3af',
   },
 });

@@ -19,13 +19,13 @@ interface ConstituencyCardProps {
   onPress?: () => void;
 }
 
-// Colors for different constituencies
+// Colors for different constituencies - Darker, eye-catching shades
 const COLORS = [
-  '#059669', // Emerald
-  '#dc2626', // Red
-  '#7c3aed', // Purple
-  '#0891b2', // Cyan
-  '#ea580c', // Orange
+  '#047857', // Deep Emerald Green
+  '#b91c1c', // Deep Ruby Red
+  '#6d28d9', // Deep Violet Purple
+  '#0e7490', // Deep Teal Cyan
+  '#c2410c', // Deep Burnt Orange
 ];
 
 export function ConstituencyCard({

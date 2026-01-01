@@ -15,6 +15,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="constituencies" />
+        <Stack.Screen name="committees" />
         <Stack.Screen name="constituency/[id]" />
         <Stack.Screen name="centers/[id]" />
         <Stack.Screen name="center-details/[centerId]" />
