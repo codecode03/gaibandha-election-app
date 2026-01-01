@@ -1,6 +1,6 @@
-import React from 'react';
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface MenuButtonProps {
   title: string;
@@ -21,13 +21,13 @@ export function MenuButton({
 }: MenuButtonProps) {
   return (
     <TouchableOpacity
-      style={[styles.container, { borderLeftColor: color }]}
+      style={styles.container}
       onPress={onPress}
       activeOpacity={0.7}
     >
       {/* Icon */}
       <View style={[styles.iconContainer, { backgroundColor: color }]}>
-        <Ionicons name={icon} size={24} color="#ffffff" />
+        <Ionicons name={icon} size={22} color="#ffffff" />
       </View>
 
       {/* Text Content */}
@@ -44,7 +44,7 @@ export function MenuButton({
       </View>
 
       {/* Chevron */}
-      <Ionicons name="chevron-forward" size={24} color={color} />
+      <Ionicons name="chevron-forward" size={22} color="#ccc" />
     </TouchableOpacity>
   );
 }
@@ -54,24 +54,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 14,
     borderRadius: 16,
-    marginBottom: 12,
-    borderLeftWidth: 4,
+    marginBottom: 10,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 3,
+    elevation: 1,
   },
   iconContainer: {
-    width: 48,
-    height: 48,
+    width: 44,
+    height: 44,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 14,
+    marginRight: 12,
   },
   textContainer: {
     flex: 1,
@@ -82,24 +81,24 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   title: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '700',
     color: '#1a1a1a',
   },
   subtitle: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 13,
+    color: '#888',
     marginTop: 2,
   },
   badge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-    marginLeft: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 10,
+    marginLeft: 8,
   },
   badgeText: {
     color: '#ffffff',
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
   },
 });
