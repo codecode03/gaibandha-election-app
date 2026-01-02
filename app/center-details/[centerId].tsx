@@ -29,7 +29,8 @@ interface CenterDetails {
   hasBoundaryWall: boolean;
   hasCCCamera: boolean;
   roomCount: number;
-  needsRenovation: boolean;
+  buildingType: 'pucca' | 'semi-pucca';
+  hasWashBlock: boolean;
   hasAllocation: boolean;
   allocationAmount?: string;
   presidingOfficer: { name: string; mobile: string };
@@ -108,8 +109,8 @@ function generateCenterDetails(constituencyId: string, centerId: string): Center
     latitude: 25.1200 + Math.random() * 0.05, longitude: 89.4100 + Math.random() * 0.05,
     roadType: isHigh ? 'paved' : (isMedium ? 'hbb' : 'muddy'), isRemote: !isHigh,
     hasElectricity: true, hasBoundaryWall: isHigh || isMedium, hasCCCamera: isHigh,
-    roomCount: Math.floor(Math.random() * 10) + 5, needsRenovation: Math.random() > 0.5,
-    hasAllocation: Math.random() > 0.3, allocationAmount: `${Math.floor(Math.random() * 2000 + 500)} টাকা`,
+    roomCount: Math.floor(Math.random() * 10) + 5, buildingType: isHigh ? 'pucca' : 'semi-pucca',
+    hasWashBlock: isHigh || isMedium, hasAllocation: Math.random() > 0.3, allocationAmount: `${Math.floor(Math.random() * 2000 + 500)} টাকা`,
     presidingOfficer: { name: 'মোঃ নজরুল ইসলাম', mobile: `${phoneBase}1` },
     assistantPresidingOfficer: { name: 'মোঃ মমিনুল হক', mobile: `${phoneBase}2` },
     pollingOfficer: { name: 'মোঃ জামিল হোসেন', mobile: `${phoneBase}3` },
@@ -187,6 +188,13 @@ export default function CenterDetailsScreen() {
             <View style={styles.detailRow}><Text style={styles.detailLabel}>ইউনিয়ন:</Text><Text style={styles.detailValue}>{center.union}</Text></View>
             <View style={styles.detailRow}><Text style={styles.detailLabel}>উপজেলা থেকে দূরত্ব:</Text><Text style={styles.detailValue}>{center.distanceFromUpazila}</Text></View>
             <View style={styles.detailRow}><Text style={styles.detailLabel}>পরিচিত ল্যান্ডমার্ক:</Text><Text style={styles.detailValue}>{center.landmark}</Text></View>
+            <View style={styles.detailRow}><Text style={styles.detailLabel}>প্রিজাইডিং অফিসার:</Text><Text style={styles.detailValue}>{center.presidingOfficer.name}</Text></View>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>মোবাইল:</Text>
+              <Pressable style={{ flex: 1 }} onPress={() => handleCall(center.presidingOfficer.mobile)}>
+                <Text style={[styles.detailValue, { color: themeColor, fontWeight: '600' }]}>{center.presidingOfficer.mobile}</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
 
@@ -224,7 +232,8 @@ export default function CenterDetailsScreen() {
           <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="home" size={18} color={themeColor} /> রুম ও বরাদ্দ তথ্য</Text>
           <View style={styles.detailsGrid}>
             <View style={styles.detailRow}><Text style={styles.detailLabel}>রুম সংখ্যা:</Text><Text style={[styles.detailValue, { fontWeight: '700' }]}>{center.roomCount} টি</Text></View>
-            <View style={styles.detailRow}><Text style={styles.detailLabel}>সংস্কার প্রয়োজন:</Text><View style={[styles.statusBadge, { backgroundColor: center.needsRenovation ? '#fef2f2' : '#f0fdf4' }]}><Text style={[styles.statusBadgeText, { color: center.needsRenovation ? '#dc2626' : '#16a34a' }]}>{center.needsRenovation ? 'আছে' : 'নেই'}</Text></View></View>
+            <View style={styles.detailRow}><Text style={styles.detailLabel}>ভবনের ধরন:</Text><View style={[styles.statusBadge, { backgroundColor: center.buildingType === 'pucca' ? '#dbeafe' : '#fef3c7' }]}><Text style={[styles.statusBadgeText, { color: center.buildingType === 'pucca' ? '#2563eb' : '#d97706' }]}>{center.buildingType === 'pucca' ? 'পাকা' : 'আধাপাকা'}</Text></View></View>
+            <View style={styles.detailRow}><Text style={styles.detailLabel}>ওয়াশ ব্লক:</Text><View style={[styles.statusBadge, { backgroundColor: center.hasWashBlock ? '#f0fdf4' : '#fef2f2' }]}><Text style={[styles.statusBadgeText, { color: center.hasWashBlock ? '#16a34a' : '#dc2626' }]}>{center.hasWashBlock ? 'আছে' : 'নাই'}</Text></View></View>
             <View style={styles.detailRow}><Text style={styles.detailLabel}>বরাদ্দ:</Text><View style={[styles.statusBadge, { backgroundColor: center.hasAllocation ? '#f0fdf4' : '#fef2f2' }]}><Text style={[styles.statusBadgeText, { color: center.hasAllocation ? '#16a34a' : '#dc2626' }]}>{center.hasAllocation ? 'আছে' : 'নেই'}</Text></View></View>
             {center.hasAllocation && center.allocationAmount && (<View style={styles.detailRow}><Text style={styles.detailLabel}>বরাদ্দের পরিমাণ:</Text><Text style={[styles.detailValue, { fontWeight: '700', color: themeColor }]}>{center.allocationAmount}</Text></View>)}
           </View>
@@ -250,7 +259,7 @@ export default function CenterDetailsScreen() {
         </View>
 
         <View style={styles.officersCard}>
-          <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="call" size={18} color={themeColor} /> প্রতিষ্ঠান যোগাযোগ</Text>
+          <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="call" size={18} color={themeColor} /> প্রতিষ্ঠান সংশ্লিষ্ট</Text>
           {[{ t: 'অধ্যক্ষ/প্রধান শিক্ষক', d: center.principal }, { t: 'বিকল্প যোগাযোগ', d: center.alternativeContact }, { t: 'নৈশ প্রহরী/দপ্তরি', d: center.nightGuard }].map((o, i, a) => (
             <View key={o.t} style={[styles.officerItem, i === a.length - 1 && { borderBottomWidth: 0 }]}>
               <View style={styles.officerInfo}><Text style={styles.officerTitle}>{o.t}</Text><Text style={styles.officerName}>{o.d.name}</Text></View>
@@ -281,10 +290,10 @@ const styles = StyleSheet.create({
   centerName: { fontSize: 18, fontWeight: '700', color: '#1a1a1a', marginBottom: 8 },
   riskBadge: { paddingVertical: 6, paddingHorizontal: 12, borderRadius: 8, borderWidth: 1, alignSelf: 'flex-start' },
   riskBadgeText: { fontSize: 13, fontWeight: '700' },
-  detailsGrid: { gap: 10 },
-  detailRow: { flexDirection: 'row', flexWrap: 'wrap' },
-  detailLabel: { fontSize: 14, color: '#666', minWidth: 110, maxWidth: '45%', marginRight: 8 },
-  detailValue: { fontSize: 14, color: '#1a1a1a', flex: 1, minWidth: '50%' },
+  detailsGrid: { gap: 6 },
+  detailRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 2 },
+  detailLabel: { fontSize: 14, color: '#666', width: 145, flexShrink: 0 },
+  detailValue: { fontSize: 14, color: '#1a1a1a', flex: 1 },
   mapCard: { backgroundColor: '#ffffff', borderRadius: 16, padding: 16, marginBottom: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 8, elevation: 3 },
   mapPreview: { backgroundColor: '#f0fdf4', borderRadius: 12, padding: 24, alignItems: 'center', marginBottom: 16 },
   mapPreviewText: { fontSize: 16, fontWeight: '600', color: '#1a1a1a', marginTop: 8 },
