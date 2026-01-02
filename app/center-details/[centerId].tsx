@@ -229,13 +229,11 @@ export default function CenterDetailsScreen() {
         </View>
 
         <View style={styles.infoCard}>
-          <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="home" size={18} color={themeColor} /> রুম ও বরাদ্দ তথ্য</Text>
+          <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="home" size={18} color={themeColor} /> রুম তথ্য</Text>
           <View style={styles.detailsGrid}>
             <View style={styles.detailRow}><Text style={styles.detailLabel}>রুম সংখ্যা:</Text><Text style={[styles.detailValue, { fontWeight: '700' }]}>{center.roomCount} টি</Text></View>
             <View style={styles.detailRow}><Text style={styles.detailLabel}>ভবনের ধরন:</Text><View style={[styles.statusBadge, { backgroundColor: center.buildingType === 'pucca' ? '#dbeafe' : '#fef3c7' }]}><Text style={[styles.statusBadgeText, { color: center.buildingType === 'pucca' ? '#2563eb' : '#d97706' }]}>{center.buildingType === 'pucca' ? 'পাকা' : 'আধাপাকা'}</Text></View></View>
             <View style={styles.detailRow}><Text style={styles.detailLabel}>ওয়াশ ব্লক:</Text><View style={[styles.statusBadge, { backgroundColor: center.hasWashBlock ? '#f0fdf4' : '#fef2f2' }]}><Text style={[styles.statusBadgeText, { color: center.hasWashBlock ? '#16a34a' : '#dc2626' }]}>{center.hasWashBlock ? 'আছে' : 'নাই'}</Text></View></View>
-            <View style={styles.detailRow}><Text style={styles.detailLabel}>বরাদ্দ:</Text><View style={[styles.statusBadge, { backgroundColor: center.hasAllocation ? '#f0fdf4' : '#fef2f2' }]}><Text style={[styles.statusBadgeText, { color: center.hasAllocation ? '#16a34a' : '#dc2626' }]}>{center.hasAllocation ? 'আছে' : 'নেই'}</Text></View></View>
-            {center.hasAllocation && center.allocationAmount && (<View style={styles.detailRow}><Text style={styles.detailLabel}>বরাদ্দের পরিমাণ:</Text><Text style={[styles.detailValue, { fontWeight: '700', color: themeColor }]}>{center.allocationAmount}</Text></View>)}
           </View>
         </View>
 

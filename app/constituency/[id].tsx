@@ -1,13 +1,13 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Linking } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import { router, useLocalSearchParams } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { OfficerCard } from '@/components/ui/officer-card';
-import { ExpandableSection } from '@/components/ui/expandable-section';
 import { CandidatesSection } from '@/components/ui/candidates-section';
-import { VehicleTable, ObserverTable, MediaTable, Vehicle, Observer, MediaPerson } from '@/components/ui/data-table-section';
+import { MediaPerson, MediaTable, Observer, ObserverTable, Vehicle, VehicleTable } from '@/components/ui/data-table-section';
+import { ExpandableSection } from '@/components/ui/expandable-section';
+import { OfficerCard } from '@/components/ui/officer-card';
+import { Ionicons } from '@expo/vector-icons';
+import { router, useLocalSearchParams } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // DC Image
 const DC_IMAGE = require('@/assets/images/dc.jpeg');
@@ -76,6 +76,7 @@ const CONSTITUENCY_DATA: Record<string, {
     ro: { name: 'মোহাম্মদ মাসুদুর রহমান মোল্লা', designation: 'জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট', mobile: '০১৭১৮৪৪৪০৯০' },
     aro: { name: 'ঈফফাত জাহান তুলি', designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২৬৯৫০৭৫', image: UNO_IMAGES.sundarganj },
     color: '#047857',
+    mapLink: 'https://drive.google.com/file/d/1SYdbaxOwbWOOllztsoknQYDvZPcYMPlQ/view?usp=sharing',
     candidates: [
       { name: 'মোঃ শফিকুল ইসলাম', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
       { name: 'মোঃ আব্দুর রহমান', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
@@ -143,6 +144,7 @@ const CONSTITUENCY_DATA: Record<string, {
     ro: { name: 'মোহাম্মদ মাসুদুর রহমান মোল্লা', designation: 'জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট', mobile: '০১৭১৮৪৪৪০৯০' },
     aro: { name: 'মিজ লাইলাতুল হোসেন', designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২৬৯৫০৭১', image: UNO_IMAGES.gaibandhasadar },
     color: '#b91c1c',
+    mapLink: 'https://drive.google.com/file/d/1K433LWBvpsa8l_PH4ggb4qhMEULbKEQg/view?usp=sharing',
     candidates: [
       { name: 'মোঃ নজরুল ইসলাম', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
       { name: 'মোঃ জাহিদুল ইসলাম', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
@@ -348,6 +350,7 @@ const CONSTITUENCY_DATA: Record<string, {
     ro: { name: 'মোহাম্মদ মাসুদুর রহমান মোল্লা', designation: 'জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট', mobile: '০১৭১৮৪৪৪০৯০' },
     aro: { name: 'জনাব মাহমুদুল হাসান', designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২৬৯৫০৭৪', image: UNO_IMAGES.sadullapur },
     color: '#6d28d9',
+    mapLink: 'https://drive.google.com/file/d/1EfrVI1RF6xP4KyDZ7Li-B6YSUs66A_61/view?usp=sharing',
     candidates: [
       { name: 'মোঃ সাইফুল ইসলাম', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
       { name: 'মোঃ রফিকুল ইসলাম', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
@@ -413,7 +416,7 @@ const CONSTITUENCY_DATA: Record<string, {
     ro: { name: 'মোহাম্মদ মাসুদুর রহমান মোল্লা', designation: 'জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট', mobile: '০১৭১৮৪৪৪০৯০' },
     aro: { name: 'সৈয়দা ইয়াসমিন সুলতানা', designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২৬৯৫০৭২', image: UNO_IMAGES.gobindaganj },
     color: '#0e7490',
-    mapLink: 'https://drive.google.com/file/d/1b2JWmOY8vkinEFOCrtegNVcPLsnM5U0M/view?usp=sharing',
+    mapLink: 'https://drive.google.com/file/d/1PfuwGijJkEiHZ8l8MHAuCtVqKW1xf6Ju/view?usp=sharing',
     candidates: [
       { name: 'মোঃ ফজলুল হক', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
       { name: 'মোঃ হাসান মাহমুদ', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
@@ -562,6 +565,7 @@ const CONSTITUENCY_DATA: Record<string, {
     ro: { name: 'মোহাম্মদ মাসুদুর রহমান মোল্লা', designation: 'জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট', mobile: '০১৭১৮৪৪৪০৯০' },
     aro: { name: 'মোঃ আশরাফুল কবীর', designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২৬৯৫০৭৬', image: UNO_IMAGES.saghata },
     color: '#c2410c',
+    mapLink: 'https://drive.google.com/file/d/1To3wXY8Rw1eXBCrtpDxL1n74812IJx8B/view?usp=sharing',
     candidates: [
       { name: 'মোঃ জাকির হোসেন', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
       { name: 'মোঃ মোস্তাফিজুর রহমান', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
