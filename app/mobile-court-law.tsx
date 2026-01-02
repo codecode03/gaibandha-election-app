@@ -12,12 +12,7 @@ export default function MobileCourtLawScreen() {
       <StatusBar style="light" backgroundColor="#0891b2" />
       
       {/* Header */}
-      <LinearGradient
-        colors={['#0891b2', '#06b6d4', '#22d3ee']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.header}
-      >
+      <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton} 
           onPress={() => router.back()}
@@ -27,7 +22,7 @@ export default function MobileCourtLawScreen() {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>মোবাইল কোর্ট আইন</Text>
         <View style={styles.headerRight} />
-      </LinearGradient>
+      </View>
 
       {/* Content */}
       <ScrollView 
@@ -391,6 +386,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 16,
+    backgroundColor: '#0891b2',
   },
   backButton: {
     width: 40,

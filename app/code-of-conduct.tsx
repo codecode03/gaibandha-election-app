@@ -1,51 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
-import { Asset } from 'expo-asset';
+import { router } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const PDF_URL = 'https://drive.google.com/file/d/1lRLTtNTTwLNqUQT1bcmFkwqgDko4FdLj/view?usp=sharing';
 
 export default function CodeOfConductScreen() {
-  const handleDownloadPdf = async () => {
-    try {
-      // Load the PDF asset
-      const asset = Asset.fromModule(require('@/assets/pdf/আচরণবিধি-২০২৫.pdf'));
-      await asset.downloadAsync();
-
-      if (!asset.localUri) {
-        Alert.alert('ত্রুটি', 'PDF ফাইল লোড করা যায়নি');
-        return;
-      }
-
-      // Copy to a shareable location
-      const fileName = 'আচরণবিধি-২০২৫.pdf';
-      const fileUri = `${FileSystem.cacheDirectory}${fileName}`;
-      
-      await FileSystem.copyAsync({
-        from: asset.localUri,
-        to: fileUri,
-      });
-
-      // Check if sharing is available
-      const isAvailable = await Sharing.isAvailableAsync();
-      
-      if (isAvailable) {
-        await Sharing.shareAsync(fileUri, {
-          mimeType: 'application/pdf',
-          dialogTitle: 'আচরণ বিধি ডাউনলোড',
-          UTI: 'com.adobe.pdf',
-        });
-      } else {
-        Alert.alert('সতর্কতা', 'এই ডিভাইসে ডাউনলোড করা সম্ভব নয়');
-      }
-    } catch (error) {
-      console.error('Error downloading PDF:', error);
-      Alert.alert('ত্রুটি', 'PDF ফাইল ডাউনলোড করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।');
-    }
+  const handleViewPdf = () => {
+    Linking.openURL(PDF_URL);
   };
 
   return (
@@ -53,12 +18,7 @@ export default function CodeOfConductScreen() {
       <StatusBar style="light" backgroundColor="#7c3aed" />
       
       {/* Header */}
-      <LinearGradient
-        colors={['#7c3aed', '#9333ea', '#a855f7']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.header}
-      >
+      <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton} 
           onPress={() => router.back()}
@@ -68,7 +28,7 @@ export default function CodeOfConductScreen() {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>আচরণ বিধি</Text>
         <View style={styles.headerRight} />
-      </LinearGradient>
+      </View>
 
       {/* Content */}
       <View style={styles.content}>
@@ -101,10 +61,10 @@ export default function CodeOfConductScreen() {
             </View>
           </View>
 
-          {/* Download Button */}
+          {/* View Button */}
           <TouchableOpacity
             style={styles.downloadButton}
-            onPress={handleDownloadPdf}
+            onPress={handleViewPdf}
             activeOpacity={0.8}
           >
             <LinearGradient
@@ -113,8 +73,8 @@ export default function CodeOfConductScreen() {
               end={{ x: 1, y: 0 }}
               style={styles.downloadButtonGradient}
             >
-              <Ionicons name="download" size={22} color="#ffffff" />
-              <Text style={styles.downloadButtonText}>ডাউনলোড করুন</Text>
+              <Ionicons name="eye" size={22} color="#ffffff" />
+              <Text style={styles.downloadButtonText}>দেখুন</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
@@ -143,6 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 16,
+    backgroundColor: '#7c3aed',
   },
   backButton: {
     width: 40,

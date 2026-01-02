@@ -40,7 +40,7 @@ export default function CommitteesScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      <StatusBar style="light" backgroundColor="#065f46" />
+      <StatusBar style="light" backgroundColor="#c2410c" />
       
       {/* Header */}
       <View style={styles.header}>
@@ -62,7 +62,7 @@ export default function CommitteesScreen() {
         {/* Info Card */}
         <View style={styles.infoCard}>
           <View style={styles.infoIconContainer}>
-            <Ionicons name="people" size={32} color="#059669" />
+            <Ionicons name="people" size={32} color="#c2410c" />
           </View>
           <Text style={styles.infoTitle}>নির্বাচন সংশ্লিষ্ট কমিটি</Text>
           <Text style={styles.infoSubtitle}>
@@ -111,7 +111,7 @@ export default function CommitteesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#065f46',
+    backgroundColor: '#c2410c',
   },
   
   // Header
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: '#065f46',
+    backgroundColor: '#c2410c',
   },
   backButton: {
     width: 40,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   // ScrollView
   scrollView: {
     flex: 1,
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#fff7ed',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
   },
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: '#ecfdf5',
+    backgroundColor: '#ffedd5',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,

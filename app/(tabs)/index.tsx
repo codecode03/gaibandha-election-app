@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { router } from 'expo-router';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+
+const CODE_OF_CONDUCT_PDF_URL = 'https://drive.google.com/file/d/1lRLTtNTTwLNqUQT1bcmFkwqgDko4FdLj/view?usp=sharing';
 
 // Color utility to create light background from accent color
 const getLightBg = (color: string) => {
@@ -71,10 +73,13 @@ export default function HomeScreen() {
         router.push('/committees');
         break;
       case 'code-of-conduct':
-        router.push('/code-of-conduct');
+        Linking.openURL(CODE_OF_CONDUCT_PDF_URL);
         break;
       case 'mobile-court-law':
         router.push('/mobile-court-law');
+        break;
+      case 'important-numbers':
+        router.push('/important-numbers');
         break;
       default:
         console.log(`Navigate to: ${screen}`);
