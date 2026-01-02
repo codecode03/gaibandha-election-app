@@ -5,175 +5,142 @@ import { StatusBar } from 'expo-status-bar';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
-// Important contacts data per constituency
+// Contact type - only designation and mobile
+interface Contact {
+  designation: string;
+  mobile: string;
+}
+
+// Important contacts data per upazila
 const CONTACTS_DATA: Record<string, {
-  code: string;
-  areaName: string;
+  upazilaName: string;
   color: string;
-  contacts: { title: string; name: string; mobile: string }[];
+  contacts: Contact[];
 }> = {
+  // Palashbari Upazila
+  '31-palashbari': {
+    upazilaName: 'পলাশবাড়ী উপজেলা',
+    color: '#6d28d9',
+    contacts: [
+      { designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২-৬৯৫০৭৩' },
+      { designation: 'সহকারী কমিশনার (ভূমি)', mobile: '০১৭৬২-৬৯৫০৮০' },
+      { designation: 'অফিসার ইনচার্জ (ওসি)', mobile: '০১৩২০-১৩২৪৫৪' },
+      { designation: 'অফিসার ইনচার্জ-তদন্ত (ওসি তদন্ত)', mobile: '০১৩২০-১৩২৪৫৫' },
+      { designation: 'সেনাবাহিনী', mobile: '' },
+      { designation: 'বিজিবি', mobile: '' },
+      { designation: 'উপজেলা নির্বাচন অফিসার', mobile: '০১৭৮৭-১৮৮৯৮২' },
+      { designation: 'উপজেলা আনসার ও ভিডিপি অফিসার', mobile: '' },
+      { designation: 'উপজেলা শিক্ষা অফিসার', mobile: '' },
+      { designation: 'উপজেলা মাধ্যমিক শিক্ষা অফিসার', mobile: '' },
+    ],
+  },
+  // Sadullapur Upazila
+  '31-sadullapur': {
+    upazilaName: 'সাদুল্লাপুর উপজেলা',
+    color: '#6d28d9',
+    contacts: [
+      { designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২-৬৯৫০৭৪' },
+      { designation: 'সহকারী কমিশনার (ভূমি)', mobile: '০১৭৬২-৬৯৫০৮১' },
+      { designation: 'অফিসার ইনচার্জ (ওসি)', mobile: '০১৩২০-১৩২৪০২' },
+      { designation: 'অফিসার ইনচার্জ-তদন্ত (ওসি তদন্ত)', mobile: '০১৩২০-১৩২৪০৩' },
+      { designation: 'সেনাবাহিনী', mobile: '' },
+      { designation: 'বিজিবি', mobile: '' },
+      { designation: 'উপজেলা নির্বাচন অফিসার', mobile: '০১৭০৬-৬১০১৪০' },
+      { designation: 'উপজেলা আনসার ও ভিডিপি অফিসার', mobile: '' },
+      { designation: 'উপজেলা শিক্ষা অফিসার', mobile: '' },
+      { designation: 'উপজেলা মাধ্যমিক শিক্ষা অফিসার', mobile: '' },
+    ],
+  },
+  // Sundarganj Upazila
   '29': {
-    code: '২৯-গাইবান্ধা-০১',
-    areaName: 'সুন্দরগঞ্জ',
+    upazilaName: 'সুন্দরগঞ্জ উপজেলা',
     color: '#047857',
     contacts: [
-      { title: 'পুলিশ সুপার', name: 'মোঃ আলমগীর হোসেন', mobile: '01713-000001' },
-      { title: 'সার্কেল এএসপি', name: 'মোঃ রাশেদুল ইসলাম', mobile: '01713-000002' },
-      { title: 'থানা অফিসার ইনচার্জ (ওসি)', name: 'মোঃ শফিকুল ইসলাম', mobile: '01713-000003' },
-      { title: 'সেনাবাহিনী জোন কমান্ডার', name: 'মেজর আরিফ হোসেন', mobile: '01713-000004' },
-      { title: 'বিজিবি জোন কমান্ডার', name: 'ক্যাপ্টেন নাজমুল হক', mobile: '01713-000005' },
-      { title: 'জেলা নির্বাচন অফিসার', name: 'মোঃ সাইফুল ইসলাম', mobile: '01713-000006' },
-      { title: 'উপজেলা নির্বাচন অফিসার', name: 'মোঃ জাহিদুল ইসলাম', mobile: '01713-000007' },
-      { title: 'নির্বাহী ম্যাজিস্ট্রেট', name: 'মোঃ তারিকুল ইসলাম', mobile: '01713-000008' },
-      { title: 'ফায়ার সার্ভিস', name: 'স্টেশন অফিসার', mobile: '01713-000009' },
-      { title: 'হাসপাতাল (জরুরি)', name: 'উপজেলা স্বাস্থ্য কমপ্লেক্স', mobile: '01713-000010' },
+      { designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২-৬৯৫০৭৫' },
+      { designation: 'সহকারী কমিশনার (ভূমি)', mobile: '০১৭৬২-৬৯৫০৮২' },
+      { designation: 'অফিসার ইনচার্জ (ওসি)', mobile: '০১৩২০-১৩২৪২৮' },
+      { designation: 'অফিসার ইনচার্জ-তদন্ত (ওসি তদন্ত)', mobile: '০১৩২০-১৩২৪২৯' },
+      { designation: 'সেনাবাহিনী', mobile: '' },
+      { designation: 'বিজিবি', mobile: '' },
+      { designation: 'উপজেলা নির্বাচন অফিসার', mobile: '০১৭১৯-১০৪৬৩২' },
+      { designation: 'উপজেলা আনসার ও ভিডিপি অফিসার', mobile: '' },
+      { designation: 'উপজেলা শিক্ষা অফিসার', mobile: '' },
+      { designation: 'উপজেলা মাধ্যমিক শিক্ষা অফিসার', mobile: '' },
     ],
   },
+  // Gaibandha Sadar Upazila
   '30': {
-    code: '৩০-গাইবান্ধা-০২',
-    areaName: 'গাইবান্ধা সদর',
+    upazilaName: 'গাইবান্ধা সদর উপজেলা',
     color: '#b91c1c',
     contacts: [
-      { title: 'পুলিশ সুপার', name: 'মোঃ কামরুল হাসান', mobile: '01714-000001' },
-      { title: 'সার্কেল এএসপি', name: 'মোঃ আনিসুর রহমান', mobile: '01714-000002' },
-      { title: 'থানা অফিসার ইনচার্জ (ওসি)', name: 'মোঃ মাহবুবুর রহমান', mobile: '01714-000003' },
-      { title: 'সেনাবাহিনী জোন কমান্ডার', name: 'মেজর সাইফুল ইসলাম', mobile: '01714-000004' },
-      { title: 'বিজিবি জোন কমান্ডার', name: 'ক্যাপ্টেন রফিকুল ইসলাম', mobile: '01714-000005' },
-      { title: 'জেলা নির্বাচন অফিসার', name: 'মোঃ নজরুল ইসলাম', mobile: '01714-000006' },
-      { title: 'উপজেলা নির্বাচন অফিসার', name: 'মোঃ শাহাদাত হোসেন', mobile: '01714-000007' },
-      { title: 'নির্বাহী ম্যাজিস্ট্রেট', name: 'মোঃ আব্দুল করিম', mobile: '01714-000008' },
-      { title: 'ফায়ার সার্ভিস', name: 'স্টেশন অফিসার', mobile: '01714-000009' },
-      { title: 'হাসপাতাল (জরুরি)', name: 'জেলা সদর হাসপাতাল', mobile: '01714-000010' },
+      { designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২-৬৯৫০৭১' },
+      { designation: 'সহকারী কমিশনার (ভূমি)', mobile: '০১৭৬২-৬৯৫০৭৮' },
+      { designation: 'অফিসার ইনচার্জ (ওসি)', mobile: '০১৩২০-১৩২৩৭৬' },
+      { designation: 'অফিসার ইনচার্জ-তদন্ত (ওসি তদন্ত)', mobile: '০১৩২০-১৩২৩৭৭' },
+      { designation: 'সেনাবাহিনী', mobile: '' },
+      { designation: 'বিজিবি', mobile: '' },
+      { designation: 'উপজেলা নির্বাচন অফিসার', mobile: '০১৭১৭-৪৭২৭৯৩' },
+      { designation: 'উপজেলা আনসার ও ভিডিপি অফিসার', mobile: '' },
+      { designation: 'উপজেলা শিক্ষা অফিসার', mobile: '' },
+      { designation: 'উপজেলা মাধ্যমিক শিক্ষা অফিসার', mobile: '' },
     ],
   },
-  '31': {
-    code: '৩১-গাইবান্ধা-০৩',
-    areaName: 'পলাশবাড়ী ও সাদুল্লাপুর',
-    color: '#6d28d9',
-    contacts: [
-      { title: 'পুলিশ সুপার', name: 'মোঃ রবিউল ইসলাম', mobile: '01715-000001' },
-      { title: 'সার্কেল এএসপি', name: 'মোঃ জসিম উদ্দিন', mobile: '01715-000002' },
-      { title: 'থানা অফিসার ইনচার্জ (ওসি)', name: 'মোঃ আলী হোসেন', mobile: '01715-000003' },
-      { title: 'সেনাবাহিনী জোন কমান্ডার', name: 'মেজর কামাল উদ্দিন', mobile: '01715-000004' },
-      { title: 'বিজিবি জোন কমান্ডার', name: 'ক্যাপ্টেন হাসান মাহমুদ', mobile: '01715-000005' },
-      { title: 'জেলা নির্বাচন অফিসার', name: 'মোঃ মনিরুল ইসলাম', mobile: '01715-000006' },
-      { title: 'উপজেলা নির্বাচন অফিসার', name: 'মোঃ ফারুক হোসেন', mobile: '01715-000007' },
-      { title: 'নির্বাহী ম্যাজিস্ট্রেট', name: 'মোঃ সোহেল রানা', mobile: '01715-000008' },
-      { title: 'ফায়ার সার্ভিস', name: 'স্টেশন অফিসার', mobile: '01715-000009' },
-      { title: 'হাসপাতাল (জরুরি)', name: 'উপজেলা স্বাস্থ্য কমপ্লেক্স', mobile: '01715-000010' },
-    ],
-  },
-  // Palashbari Upazila (গাইবান্ধা-০৩)
-  '31-palashbari': {
-    code: '৩১-গাইবান্ধা-০৩',
-    areaName: 'পলাশবাড়ী',
-    color: '#6d28d9',
-    contacts: [
-      { title: 'পুলিশ সুপার', name: 'মোঃ রবিউল ইসলাম', mobile: '01715-000001' },
-      { title: 'সার্কেল এএসপি', name: 'মোঃ জসিম উদ্দিন', mobile: '01715-000002' },
-      { title: 'থানা অফিসার ইনচার্জ (ওসি)', name: 'মোঃ আলী হোসেন', mobile: '01715-000003' },
-      { title: 'সেনাবাহিনী জোন কমান্ডার', name: 'মেজর কামাল উদ্দিন', mobile: '01715-000004' },
-      { title: 'বিজিবি জোন কমান্ডার', name: 'ক্যাপ্টেন হাসান মাহমুদ', mobile: '01715-000005' },
-      { title: 'উপজেলা নির্বাহী অফিসার', name: 'মোঃ নজরুল ইসলাম', mobile: '01714-789012' },
-      { title: 'উপজেলা নির্বাচন অফিসার', name: 'মোঃ ফারুক হোসেন', mobile: '01715-000007' },
-      { title: 'নির্বাহী ম্যাজিস্ট্রেট', name: 'মোঃ রাশেদুল ইসলাম', mobile: '01716-901234' },
-      { title: 'ফায়ার সার্ভিস', name: 'স্টেশন অফিসার', mobile: '01715-000009' },
-      { title: 'হাসপাতাল (জরুরি)', name: 'পলাশবাড়ী উপজেলা স্বাস্থ্য কমপ্লেক্স', mobile: '01715-000011' },
-    ],
-  },
-  // Sadullapur Upazila (গাইবান্ধা-০৩)
-  '31-sadullapur': {
-    code: '৩১-গাইবান্ধা-০৩',
-    areaName: 'সাদুল্লাপুর',
-    color: '#6d28d9',
-    contacts: [
-      { title: 'পুলিশ সুপার', name: 'মোঃ রবিউল ইসলাম', mobile: '01715-000001' },
-      { title: 'সার্কেল এএসপি', name: 'মোঃ জসিম উদ্দিন', mobile: '01715-000002' },
-      { title: 'থানা অফিসার ইনচার্জ (ওসি)', name: 'মোঃ শামসুল হক', mobile: '01715-000013' },
-      { title: 'সেনাবাহিনী জোন কমান্ডার', name: 'মেজর কামাল উদ্দিন', mobile: '01715-000004' },
-      { title: 'বিজিবি জোন কমান্ডার', name: 'ক্যাপ্টেন হাসান মাহমুদ', mobile: '01715-000005' },
-      { title: 'উপজেলা নির্বাহী অফিসার', name: 'মোঃ আসাদুজ্জামান', mobile: '01714-789014' },
-      { title: 'উপজেলা নির্বাচন অফিসার', name: 'মোঃ মাহবুব আলম', mobile: '01715-000017' },
-      { title: 'নির্বাহী ম্যাজিস্ট্রেট', name: 'মোঃ ফারুক হোসেন', mobile: '01716-901235' },
-      { title: 'ফায়ার সার্ভিস', name: 'স্টেশন অফিসার', mobile: '01715-000019' },
-      { title: 'হাসপাতাল (জরুরি)', name: 'সাদুল্লাপুর উপজেলা স্বাস্থ্য কমপ্লেক্স', mobile: '01715-000020' },
-    ],
-  },
+  // Gobindaganj Upazila - placeholder
   '32': {
-    code: '৩২-গাইবান্ধা-০৪',
-    areaName: 'গোবিন্দগঞ্জ',
+    upazilaName: 'গোবিন্দগঞ্জ উপজেলা',
     color: '#0e7490',
     contacts: [
-      { title: 'পুলিশ সুপার', name: 'মোঃ শামসুল আলম', mobile: '01716-000001' },
-      { title: 'সার্কেল এএসপি', name: 'মোঃ হাবিবুর রহমান', mobile: '01716-000002' },
-      { title: 'থানা অফিসার ইনচার্জ (ওসি)', name: 'মোঃ আকবর আলী', mobile: '01716-000003' },
-      { title: 'সেনাবাহিনী জোন কমান্ডার', name: 'মেজর রাজিব আহমেদ', mobile: '01716-000004' },
-      { title: 'বিজিবি জোন কমান্ডার', name: 'ক্যাপ্টেন জামিল হোসেন', mobile: '01716-000005' },
-      { title: 'জেলা নির্বাচন অফিসার', name: 'মোঃ আমিনুল ইসলাম', mobile: '01716-000006' },
-      { title: 'উপজেলা নির্বাচন অফিসার', name: 'মোঃ মোস্তাফিজুর রহমান', mobile: '01716-000007' },
-      { title: 'নির্বাহী ম্যাজিস্ট্রেট', name: 'মোঃ জাকির হোসেন', mobile: '01716-000008' },
-      { title: 'ফায়ার সার্ভিস', name: 'স্টেশন অফিসার', mobile: '01716-000009' },
-      { title: 'হাসপাতাল (জরুরি)', name: 'উপজেলা স্বাস্থ্য কমপ্লেক্স', mobile: '01716-000010' },
+      { designation: 'উপজেলা নির্বাহী অফিসার', mobile: '' },
+      { designation: 'সহকারী কমিশনার (ভূমি)', mobile: '' },
+      { designation: 'অফিসার ইনচার্জ (ওসি)', mobile: '' },
+      { designation: 'অফিসার ইনচার্জ-তদন্ত (ওসি তদন্ত)', mobile: '' },
+      { designation: 'সেনাবাহিনী', mobile: '' },
+      { designation: 'বিজিবি', mobile: '' },
+      { designation: 'উপজেলা নির্বাচন অফিসার', mobile: '' },
+      { designation: 'উপজেলা আনসার ও ভিডিপি অফিসার', mobile: '' },
+      { designation: 'উপজেলা শিক্ষা অফিসার', mobile: '' },
+      { designation: 'উপজেলা মাধ্যমিক শিক্ষা অফিসার', mobile: '' },
     ],
   },
-  '33': {
-    code: '৩৩-গাইবান্ধা-০৫',
-    areaName: 'সাঘাটা ও ফুলছড়ি',
-    color: '#c2410c',
-    contacts: [
-      { title: 'পুলিশ সুপার', name: 'মোঃ ইকবাল হোসেন', mobile: '01717-000001' },
-      { title: 'সার্কেল এএসপি', name: 'মোঃ সালাউদ্দিন', mobile: '01717-000002' },
-      { title: 'থানা অফিসার ইনচার্জ (ওসি)', name: 'মোঃ বেলাল হোসেন', mobile: '01717-000003' },
-      { title: 'সেনাবাহিনী জোন কমান্ডার', name: 'মেজর তানভীর আহমেদ', mobile: '01717-000004' },
-      { title: 'বিজিবি জোন কমান্ডার', name: 'ক্যাপ্টেন ফয়সাল আহমেদ', mobile: '01717-000005' },
-      { title: 'জেলা নির্বাচন অফিসার', name: 'মোঃ রেজাউল করিম', mobile: '01717-000006' },
-      { title: 'উপজেলা নির্বাচন অফিসার', name: 'মোঃ আতিকুর রহমান', mobile: '01717-000007' },
-      { title: 'নির্বাহী ম্যাজিস্ট্রেট', name: 'মোঃ মাসুদ রানা', mobile: '01717-000008' },
-      { title: 'ফায়ার সার্ভিস', name: 'স্টেশন অফিসার', mobile: '01717-000009' },
-      { title: 'হাসপাতাল (জরুরি)', name: 'উপজেলা স্বাস্থ্য কমপ্লেক্স', mobile: '01717-000010' },
-    ],
-  },
-  // Saghata Upazila (গাইবান্ধা-০৫)
+  // Saghata Upazila
   '33-saghata': {
-    code: '৩৩-গাইবান্ধা-০৫',
-    areaName: 'সাঘাটা',
+    upazilaName: 'সাঘাটা উপজেলা',
     color: '#c2410c',
     contacts: [
-      { title: 'পুলিশ সুপার', name: 'মোঃ ইকবাল হোসেন', mobile: '01717-000001' },
-      { title: 'সার্কেল এএসপি', name: 'মোঃ সালাউদ্দিন', mobile: '01717-000002' },
-      { title: 'থানা অফিসার ইনচার্জ (ওসি)', name: 'মোঃ বেলাল হোসেন', mobile: '01717-000003' },
-      { title: 'সেনাবাহিনী জোন কমান্ডার', name: 'মেজর তানভীর আহমেদ', mobile: '01717-000004' },
-      { title: 'বিজিবি জোন কমান্ডার', name: 'ক্যাপ্টেন ফয়সাল আহমেদ', mobile: '01717-000005' },
-      { title: 'উপজেলা নির্বাহী অফিসার', name: 'মোঃ তারিকুল ইসলাম', mobile: '01716-123456' },
-      { title: 'উপজেলা নির্বাচন অফিসার', name: 'মোঃ আতিকুর রহমান', mobile: '01717-000007' },
-      { title: 'নির্বাহী ম্যাজিস্ট্রেট', name: 'মোঃ আতিকুর রহমান', mobile: '01718-345678' },
-      { title: 'ফায়ার সার্ভিস', name: 'স্টেশন অফিসার', mobile: '01717-000009' },
-      { title: 'হাসপাতাল (জরুরি)', name: 'সাঘাটা উপজেলা স্বাস্থ্য কমপ্লেক্স', mobile: '01717-000011' },
+      { designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২-৬৯৫০৭৬' },
+      { designation: 'সহকারী কমিশনার (ভূমি)', mobile: '০১৭৬২-৬৯৫০৮৩' },
+      { designation: 'অফিসার ইনচার্জ (ওসি)', mobile: '০১৩২০-১৩২৫০৬' },
+      { designation: 'অফিসার ইনচার্জ-তদন্ত (ওসি তদন্ত)', mobile: '০১৩২০-১৩২৫০৭' },
+      { designation: 'সেনাবাহিনী', mobile: '' },
+      { designation: 'বিজিবি', mobile: '' },
+      { designation: 'উপজেলা নির্বাচন অফিসার', mobile: '০১৭৩২-৫৩৫২৭৭' },
+      { designation: 'উপজেলা আনসার ও ভিডিপি অফিসার', mobile: '' },
+      { designation: 'উপজেলা শিক্ষা অফিসার', mobile: '' },
+      { designation: 'উপজেলা মাধ্যমিক শিক্ষা অফিসার', mobile: '' },
     ],
   },
-  // Fulchari Upazila (গাইবান্ধা-০৫)
+  // Fulchari Upazila
   '33-fulchari': {
-    code: '৩৩-গাইবান্ধা-০৫',
-    areaName: 'ফুলছড়ি',
+    upazilaName: 'ফুলছড়ি উপজেলা',
     color: '#c2410c',
     contacts: [
-      { title: 'পুলিশ সুপার', name: 'মোঃ ইকবাল হোসেন', mobile: '01717-000001' },
-      { title: 'সার্কেল এএসপি', name: 'মোঃ সালাউদ্দিন', mobile: '01717-000002' },
-      { title: 'থানা অফিসার ইনচার্জ (ওসি)', name: 'মোঃ জাহিদুল হক', mobile: '01717-000013' },
-      { title: 'সেনাবাহিনী জোন কমান্ডার', name: 'মেজর তানভীর আহমেদ', mobile: '01717-000004' },
-      { title: 'বিজিবি জোন কমান্ডার', name: 'ক্যাপ্টেন ফয়সাল আহমেদ', mobile: '01717-000005' },
-      { title: 'উপজেলা নির্বাহী অফিসার', name: 'মোঃ আমিনুল ইসলাম', mobile: '01716-123458' },
-      { title: 'উপজেলা নির্বাচন অফিসার', name: 'মোঃ নাজমুল হক', mobile: '01717-000017' },
-      { title: 'নির্বাহী ম্যাজিস্ট্রেট', name: 'মোঃ রেজাউল করিম', mobile: '01718-345679' },
-      { title: 'ফায়ার সার্ভিস', name: 'স্টেশন অফিসার', mobile: '01717-000019' },
-      { title: 'হাসপাতাল (জরুরি)', name: 'ফুলছড়ি উপজেলা স্বাস্থ্য কমপ্লেক্স', mobile: '01717-000020' },
+      { designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২-৬৯৫০৭৭' },
+      { designation: 'সহকারী কমিশনার (ভূমি)', mobile: '' },
+      { designation: 'অফিসার ইনচার্জ (ওসি)', mobile: '০১৩২০-১৩২৫৩২' },
+      { designation: 'অফিসার ইনচার্জ-তদন্ত (ওসি তদন্ত)', mobile: '০১৩২০-১৩২৫৩৩' },
+      { designation: 'সেনাবাহিনী', mobile: '' },
+      { designation: 'বিজিবি', mobile: '' },
+      { designation: 'উপজেলা নির্বাচন অফিসার', mobile: '০১৭৩২-৫৭০৭৮৪' },
+      { designation: 'উপজেলা আনসার ও ভিডিপি অফিসার', mobile: '' },
+      { designation: 'উপজেলা শিক্ষা অফিসার', mobile: '' },
+      { designation: 'উপজেলা মাধ্যমিক শিক্ষা অফিসার', mobile: '' },
     ],
   },
 };
 
 export default function ImportantNumbersScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const data = CONTACTS_DATA[id || '29'];
+  const data = CONTACTS_DATA[id || '31-palashbari'];
 
   const handleBack = () => {
     if (router.canGoBack()) {
@@ -184,7 +151,22 @@ export default function ImportantNumbersScreen() {
   };
 
   const handleCall = (mobile: string) => {
-    Linking.openURL(`tel:${mobile.replace(/-/g, '')}`);
+    if (mobile) {
+      // Convert Bengali digits to English for dialing
+      const englishDigits = mobile
+        .replace(/০/g, '0')
+        .replace(/১/g, '1')
+        .replace(/২/g, '2')
+        .replace(/৩/g, '3')
+        .replace(/৪/g, '4')
+        .replace(/৫/g, '5')
+        .replace(/৬/g, '6')
+        .replace(/৭/g, '7')
+        .replace(/৮/g, '8')
+        .replace(/৯/g, '9')
+        .replace(/-/g, '');
+      Linking.openURL(`tel:${englishDigits}`);
+    }
   };
 
   if (!data) {
@@ -208,8 +190,8 @@ export default function ImportantNumbersScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitleContainer}>
-          <Text style={styles.headerTitle}>গুরুত্বপূর্ণ নম্বর</Text>
-          <Text style={styles.headerSubtitle}>{data.code} • {data.areaName}</Text>
+          <Text style={styles.headerTitle}>{data.upazilaName}</Text>
+          <Text style={styles.headerSubtitle}>গুরুত্বপূর্ণ মোবাইল নম্বর</Text>
         </View>
         <View style={styles.headerRight} />
       </View>
@@ -232,7 +214,7 @@ export default function ImportantNumbersScreen() {
 
         {/* Table Header */}
         <View style={[styles.tableHeader, { backgroundColor: data.color }]}>
-          <Text style={[styles.tableHeaderText, { flex: 2 }]}>কর্মকর্তা</Text>
+          <Text style={[styles.tableHeaderText, { flex: 2 }]}>পদবি</Text>
           <Text style={[styles.tableHeaderText, { flex: 1, textAlign: 'right' }]}>মোবাইল নম্বর</Text>
         </View>
 
@@ -243,21 +225,25 @@ export default function ImportantNumbersScreen() {
             style={({ pressed }) => [
               styles.tableRow,
               index % 2 === 0 && styles.tableRowEven,
-              pressed && { backgroundColor: `${data.color}15` },
+              pressed && contact.mobile ? { backgroundColor: `${data.color}15` } : {},
             ]}
             onPress={() => handleCall(contact.mobile)}
+            disabled={!contact.mobile}
           >
             <View style={styles.contactInfo}>
-              <Text style={styles.contactTitle}>{contact.title}</Text>
-              <Text style={styles.contactName}>{contact.name}</Text>
+              <Text style={styles.contactDesignation}>{contact.designation}</Text>
             </View>
-            <Pressable
-              style={[styles.callButton, { backgroundColor: data.color }]}
-              onPress={() => handleCall(contact.mobile)}
-            >
-              <Ionicons name="call" size={16} color="#ffffff" />
-              <Text style={styles.callButtonText}>{contact.mobile}</Text>
-            </Pressable>
+            {contact.mobile ? (
+              <Pressable
+                style={[styles.callButton, { backgroundColor: data.color }]}
+                onPress={() => handleCall(contact.mobile)}
+              >
+                <Ionicons name="call" size={14} color="#ffffff" />
+                <Text style={styles.callButtonText}>{contact.mobile}</Text>
+              </Pressable>
+            ) : (
+              <Text style={styles.noNumberText}>—</Text>
+            )}
           </Pressable>
         ))}
 
@@ -313,7 +299,7 @@ const styles = StyleSheet.create({
   // ScrollView
   scrollView: {
     flex: 1,
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#f8fafc',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
   },
@@ -370,7 +356,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    paddingVertical: 12,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb',
@@ -381,28 +367,28 @@ const styles = StyleSheet.create({
   contactInfo: {
     flex: 2,
   },
-  contactTitle: {
+  contactDesignation: {
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '600',
     color: '#1a1a1a',
-    marginBottom: 2,
-  },
-  contactName: {
-    fontSize: 13,
-    color: '#666',
   },
   callButton: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 8,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     borderRadius: 8,
+    gap: 4,
   },
   callButtonText: {
     color: '#ffffff',
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '600',
-    marginLeft: 6,
+  },
+  noNumberText: {
+    fontSize: 14,
+    color: '#9ca3af',
+    fontWeight: '500',
   },
   // Footer
   footer: {
