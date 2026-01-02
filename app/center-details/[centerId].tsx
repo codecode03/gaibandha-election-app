@@ -258,6 +258,41 @@ export default function CenterDetailsScreen() {
           ))}
         </View>
 
+        {/* কেন্দ্রে নিয়োজিত আইন-শৃঙ্খলা বাহিনী */}
+        <View style={styles.officersCard}>
+          <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="shield" size={18} color={themeColor} /> কেন্দ্রে নিয়োজিত আইন-শৃঙ্খলা বাহিনী</Text>
+          <View style={styles.noDataContainer}>
+            <Ionicons name="information-circle-outline" size={40} color="#9ca3af" />
+            <Text style={styles.noDataText}>তথ্য পাওয়া যায়নি</Text>
+          </View>
+        </View>
+
+        {/* স্ট্রাইকিং ফোর্স */}
+        <View style={styles.officersCard}>
+          <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="flash" size={18} color={themeColor} /> স্ট্রাইকিং ফোর্স</Text>
+          {[
+            { t: 'পুলিশ', mobile: '' },
+            { t: 'বাংলাদেশ আর্মি', mobile: '' },
+            { t: 'বিজিবি (বর্ডার গার্ড বাংলাদেশ)', mobile: '' },
+            { t: 'র‍্যাব (Rapid Action Battalion)', mobile: '' },
+            { t: 'আনসার ও গ্রাম প্রতিরক্ষা বাহিনী', mobile: '' },
+          ].map((o, i, a) => (
+            <View key={o.t} style={[styles.officerItem, i === a.length - 1 && { borderBottomWidth: 0 }]}>
+              <View style={styles.officerInfo}>
+                <Text style={styles.officerName}>{o.t}</Text>
+              </View>
+              {o.mobile ? (
+                <Pressable style={[styles.callButton, { backgroundColor: themeColor }]} onPress={() => handleCall(o.mobile)}>
+                  <Ionicons name="call" size={16} color="#ffffff" />
+                  <Text style={styles.callButtonText}>{o.mobile}</Text>
+                </Pressable>
+              ) : (
+                <Text style={styles.noNumberText}>—</Text>
+              )}
+            </View>
+          ))}
+        </View>
+
         <View style={styles.officersCard}>
           <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="call" size={18} color={themeColor} /> প্রতিষ্ঠান সংশ্লিষ্ট</Text>
           {[{ t: 'অধ্যক্ষ/প্রধান শিক্ষক', d: center.principal }, { t: 'বিকল্প যোগাযোগ', d: center.alternativeContact }, { t: 'নৈশ প্রহরী/দপ্তরি', d: center.nightGuard }].map((o, i, a) => (
@@ -318,6 +353,9 @@ const styles = StyleSheet.create({
   officerName: { fontSize: 15, fontWeight: '600', color: '#1a1a1a' },
   callButton: { flexDirection: 'row', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8 },
   callButtonText: { color: '#ffffff', fontSize: 13, fontWeight: '600', marginLeft: 6 },
+  noDataContainer: { alignItems: 'center', justifyContent: 'center', paddingVertical: 24 },
+  noDataText: { fontSize: 14, color: '#9ca3af', marginTop: 8, fontWeight: '500' },
+  noNumberText: { fontSize: 14, color: '#9ca3af', fontWeight: '500' },
   footer: { paddingVertical: 20, alignItems: 'center', marginTop: 8 },
   footerText: { fontSize: 12, color: '#6b7280', fontWeight: '500' },
 });
