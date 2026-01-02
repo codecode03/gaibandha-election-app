@@ -30,14 +30,14 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/loading-padded.png",
-          "imageWidth": 320,
+          "image": "./assets/images/loading.png",
+          "imageWidth": 500,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
-            "image": "./assets/images/loading-padded.png",
-            "imageWidth": 320,
-            "backgroundColor": "#ffffff"
+            "image": "./assets/images/loading.png",
+            "imageWidth": 500,
+            "backgroundColor": "#1a1a1a"
           }
         }
       ],
