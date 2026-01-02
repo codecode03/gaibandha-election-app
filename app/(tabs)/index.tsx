@@ -1,11 +1,11 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import { router } from 'expo-router';
-import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CODE_OF_CONDUCT_PDF_URL = 'https://drive.google.com/file/d/1uIw4FozbXvTdrBTNNhji3KZez0-w9tub/view?usp=sharing';
 
@@ -61,9 +61,13 @@ function MenuItem({ title, subtitle, badge, icon, color, onPress }: MenuItemProp
   );
 }
 
-const HEADER_HEIGHT = 360;
+const BASE_HEADER_HEIGHT = 320;
 
 export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
+  // Add safe area top inset to header height for proper spacing
+  const HEADER_HEIGHT = BASE_HEADER_HEIGHT + insets.top;
+  
   const handleNavigation = (screen: string) => {
     switch (screen) {
       case 'constituencies':
@@ -95,7 +99,7 @@ export default function HomeScreen() {
         colors={['#065F46', '#047857', '#059669']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        style={styles.fixedHeader}
+        style={[styles.fixedHeader, { height: HEADER_HEIGHT }]}
       >
         {/* Subtle Decorative Bubbles */}
         <View style={styles.bubblesContainer}>
@@ -105,7 +109,7 @@ export default function HomeScreen() {
         </View>
         
         {/* Header Content */}
-        <View style={styles.headerContent}>
+        <View style={[styles.headerContent, { paddingTop: insets.top + 12 }]}>
           <Text style={styles.headerTopText}>ত্রয়দশ জাতীয় সংসদ নির্বাচন</Text>
           
           {/* Logo */}
@@ -145,7 +149,7 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Spacer for fixed header */}
-        <View style={styles.headerSpacer} />
+        <View style={{ height: HEADER_HEIGHT - 60 }} />
 
         {/* DC Card - White with rounded top */}
         <View style={styles.dcCard}>
@@ -241,7 +245,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: HEADER_HEIGHT,
     zIndex: 1,
     overflow: 'hidden',
   },
@@ -253,9 +256,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-  },
-  headerSpacer: {
-    height: HEADER_HEIGHT - 40,
   },
   
   bubblesContainer: {
@@ -289,23 +289,22 @@ const styles = StyleSheet.create({
     left: 30,
   },
   headerContent: {
-    paddingTop: 20,
-    paddingBottom: 32,
+    paddingBottom: 16,
     paddingHorizontal: 24,
     alignItems: 'center',
     zIndex: 1,
   },
   headerTopText: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '600',
     color: '#ffffff',
-    marginBottom: 24,
+    marginBottom: 12,
   },
   logoBox: {
     backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 12,
-    marginBottom: 20,
+    marginBottom: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -313,14 +312,14 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   logo: {
-    width: 80,
-    height: 80,
+    width: 88,
+    height: 88,
   },
   headerTitle: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: '700',
     color: '#ffffff',
-    marginBottom: 16,
+    marginBottom: 10,
   },
   appTagPill: {
     flexDirection: 'row',
@@ -355,8 +354,8 @@ const styles = StyleSheet.create({
   // DC Card
   dcCard: {
     backgroundColor: '#ffffff',
-    paddingTop: 24,
-    paddingBottom: 28,
+    paddingTop: 16,
+    paddingBottom: 20,
     paddingHorizontal: 24,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -365,7 +364,7 @@ const styles = StyleSheet.create({
   dcLabelContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 12,
     width: '100%',
     justifyContent: 'center',
     gap: 12,
@@ -381,12 +380,12 @@ const styles = StyleSheet.create({
     color: '#9ca3af',
   },
   dcPhotoWrapper: {
-    marginBottom: 16,
+    marginBottom: 10,
   },
   dcPhotoBorder: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
     borderWidth: 3,
     borderColor: '#059669',
     padding: 3,
@@ -420,13 +419,13 @@ const styles = StyleSheet.create({
   menuSection: {
     backgroundColor: '#F0FDF4',
     paddingHorizontal: 16,
-    paddingTop: 28,
-    paddingBottom: 20,
+    paddingTop: 20,
+    paddingBottom: 16,
   },
   menuHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
     marginLeft: 4,
     gap: 8,
   },
