@@ -261,34 +261,42 @@ export default function CenterDetailsScreen() {
         {/* কেন্দ্রে নিয়োজিত আইন-শৃঙ্খলা বাহিনী */}
         <View style={styles.officersCard}>
           <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="shield" size={18} color={themeColor} /> কেন্দ্রে নিয়োজিত আইন-শৃঙ্খলা বাহিনী</Text>
-          <View style={styles.noDataContainer}>
-            <Ionicons name="information-circle-outline" size={40} color="#9ca3af" />
-            <Text style={styles.noDataText}>তথ্য পাওয়া যায়নি</Text>
-          </View>
+          {[
+            { t: 'পুলিশ কনস্টেবল', name: 'মোঃ রফিকুল ইসলাম', mobile: `01747${constituencyId}${centerNum}70` },
+            { t: 'আনসার সদস্য', name: 'মোঃ শাহজাহান আলী', mobile: `01747${constituencyId}${centerNum}71` },
+            { t: 'গ্রাম প্রতিরক্ষা সদস্য', name: 'মোঃ আব্দুল মান্নান', mobile: `01747${constituencyId}${centerNum}72` },
+          ].map((o, i, a) => (
+            <View key={o.t} style={[styles.officerItem, i === a.length - 1 && { borderBottomWidth: 0 }]}>
+              <View style={styles.officerInfo}>
+                <Text style={styles.officerTitle}>{o.t}</Text>
+                <Text style={styles.officerName}>{o.name}</Text>
+              </View>
+              <Pressable style={[styles.callButton, { backgroundColor: themeColor }]} onPress={() => handleCall(o.mobile)}>
+                <Ionicons name="call" size={16} color="#ffffff" />
+                <Text style={styles.callButtonText}>{o.mobile}</Text>
+              </Pressable>
+            </View>
+          ))}
         </View>
 
         {/* স্ট্রাইকিং ফোর্স */}
         <View style={styles.officersCard}>
           <Text style={[styles.sectionTitle, { color: themeColor }]}><Ionicons name="flash" size={18} color={themeColor} /> স্ট্রাইকিং ফোর্স</Text>
           {[
-            { t: 'পুলিশ', mobile: '' },
-            { t: 'বাংলাদেশ আর্মি', mobile: '' },
-            { t: 'বিজিবি (বর্ডার গার্ড বাংলাদেশ)', mobile: '' },
-            { t: 'র‍্যাব (Rapid Action Battalion)', mobile: '' },
-            { t: 'আনসার ও গ্রাম প্রতিরক্ষা বাহিনী', mobile: '' },
+            { t: 'পুলিশ', mobile: `01747${constituencyId}${centerNum}80` },
+            { t: 'বাংলাদেশ আর্মি', mobile: `01747${constituencyId}${centerNum}81` },
+            { t: 'বিজিবি (বর্ডার গার্ড বাংলাদেশ)', mobile: `01747${constituencyId}${centerNum}82` },
+            { t: 'র‍্যাব (Rapid Action Battalion)', mobile: `01747${constituencyId}${centerNum}83` },
+            { t: 'আনসার ও গ্রাম প্রতিরক্ষা বাহিনী', mobile: `01747${constituencyId}${centerNum}84` },
           ].map((o, i, a) => (
             <View key={o.t} style={[styles.officerItem, i === a.length - 1 && { borderBottomWidth: 0 }]}>
               <View style={styles.officerInfo}>
                 <Text style={styles.officerName}>{o.t}</Text>
               </View>
-              {o.mobile ? (
-                <Pressable style={[styles.callButton, { backgroundColor: themeColor }]} onPress={() => handleCall(o.mobile)}>
-                  <Ionicons name="call" size={16} color="#ffffff" />
-                  <Text style={styles.callButtonText}>{o.mobile}</Text>
-                </Pressable>
-              ) : (
-                <Text style={styles.noNumberText}>—</Text>
-              )}
+              <Pressable style={[styles.callButton, { backgroundColor: themeColor }]} onPress={() => handleCall(o.mobile)}>
+                <Ionicons name="call" size={16} color="#ffffff" />
+                <Text style={styles.callButtonText}>{o.mobile}</Text>
+              </Pressable>
             </View>
           ))}
         </View>
