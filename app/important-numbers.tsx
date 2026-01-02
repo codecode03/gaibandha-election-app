@@ -6,88 +6,35 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
-// Dummy contact data
+// Important contact data
 const CONTACTS = [
-  { 
-    title: 'পুলিশ সুপার (SP)', 
-    name: 'জনাব মোঃ আলমগীর হোসেন', 
-    mobile: '01713-456789' 
-  },
-  { 
-    title: 'আর্মি ক্যাম্প কমান্ডার', 
-    name: 'লে. কর্নেল মোঃ রাশেদুল ইসলাম', 
-    mobile: '01714-567890' 
-  },
-  { 
-    title: 'বিজিবি কমান্ডার', 
-    name: 'মেজর মোঃ শফিকুল ইসলাম', 
-    mobile: '01715-678901' 
-  },
-  { 
-    title: 'র‍্যাব ক্যাম্প কমান্ডার', 
-    name: 'মেজর মোঃ তারিকুল ইসলাম', 
-    mobile: '01716-789012' 
-  },
-  { 
-    title: 'জেলা নির্বাচন অফিসার', 
-    name: 'জনাব মোঃ সাইফুল ইসলাম', 
-    mobile: '01717-890123' 
-  },
-  { 
-    title: 'ডিডিএলজি (DDLG)', 
-    name: 'জনাব মোঃ নজরুল ইসলাম', 
-    mobile: '01718-901234' 
-  },
-  { 
-    title: 'এডিসি (সার্বিক)', 
-    name: 'জনাব মোঃ আব্দুল করিম', 
-    mobile: '01719-012345' 
-  },
-  { 
-    title: 'এডিসি (রাজস্ব)', 
-    name: 'জনাব মোঃ জাহিদুল ইসলাম', 
-    mobile: '01711-123456' 
-  },
-  { 
-    title: 'এডিসি (শিক্ষা ও আইসিটি)', 
-    name: 'জনাব মোঃ মনিরুল ইসলাম', 
-    mobile: '01712-234567' 
-  },
-  { 
-    title: 'এডিসি (এলএ)', 
-    name: 'জনাব মোঃ ফারুক হোসেন', 
-    mobile: '01713-345678' 
-  },
-  { 
-    title: 'এডিসি (নির্বাচন)', 
-    name: 'জনাব মোঃ রবিউল ইসলাম', 
-    mobile: '01714-456789' 
-  },
-  { 
-    title: 'এডিসি (উন্নয়ন)', 
-    name: 'জনাব মোঃ শাহাদাত হোসেন', 
-    mobile: '01715-567890' 
-  },
-  { 
-    title: 'এডিসি (আইন শৃঙ্খলা)', 
-    name: 'জনাব মোঃ কামরুল হাসান', 
-    mobile: '01716-678901' 
-  },
-  { 
-    title: 'এডিসি (সমন্বয়)', 
-    name: 'জনাব মোঃ আনিসুর রহমান', 
-    mobile: '01717-789012' 
-  },
-  { 
-    title: 'এডিএম (ADM)', 
-    name: 'জনাব মোঃ মাসুদ রানা', 
-    mobile: '01718-890123' 
-  },
+  { title: 'পুলিশ সুপার', mobile: '০১৫২০-১৫২০০০' },
+  { title: 'সেনাবাহিনী ক্যাম্প কমান্ডার', mobile: '০১৭৬৯-৬৬০১৪৭' },
+  { title: 'বিজিবি কমান্ডার', mobile: '' },
+  { title: 'র‍্যাব ক্যাম্প কমান্ডার', mobile: '০১৯৯৯-৭৯১০৩৩' },
+  { title: 'জেলা ইলেকশন অফিসার', mobile: '০১৭১২-৩৬২৯৪৮' },
+  { title: 'উপপরিচালক, স্থানীয় সরকার, গাইবান্ধা', mobile: '০১৭৬২-৬৯৫০৫৪' },
+  { title: 'অতিরিক্ত জেলা প্রশাসক (সার্বিক)', mobile: '০১৭৬২-৬৯৫০৫১' },
+  { title: 'অতিরিক্ত জেলা প্রশাসক (রাজস্ব)', mobile: '০১৭৬২-৬৯৫০৫২' },
+  { title: 'অতিরিক্ত জেলা প্রশাসক (উন্নয়ন ও মানবসম্পদ)', mobile: '০১৭৬২-৬৯৫০৮৯' },
+  { title: 'অতিরিক্ত জেলা প্রশাসক (শিক্ষা ও আইসিটি)', mobile: '০১৭৬২-৬৯৫০৮৫' },
+  { title: 'অতিরিক্ত জেলা ম্যাজিস্ট্রেট', mobile: '০১৭৬২-৬৯৫০৫৩' },
 ];
+
+// Convert Bengali numerals to English
+const convertBengaliToEnglish = (str: string) => {
+  const bengaliNumerals = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+  let result = str;
+  bengaliNumerals.forEach((bn, index) => {
+    result = result.replace(new RegExp(bn, 'g'), index.toString());
+  });
+  return result;
+};
 
 export default function ImportantNumbersScreen() {
   const handleCall = (mobile: string) => {
-    Linking.openURL(`tel:${mobile.replace(/-/g, '')}`);
+    const englishNumber = convertBengaliToEnglish(mobile).replace(/-/g, '');
+    Linking.openURL(`tel:${englishNumber}`);
   };
 
   return (
@@ -136,21 +83,25 @@ export default function ImportantNumbersScreen() {
                 styles.contactCard,
                 index % 2 === 0 && styles.contactCardEven
               ]}
-              onPress={() => handleCall(contact.mobile)}
-              activeOpacity={0.7}
+              onPress={() => contact.mobile && handleCall(contact.mobile)}
+              activeOpacity={contact.mobile ? 0.7 : 1}
+              disabled={!contact.mobile}
             >
               <View style={styles.contactInfo}>
                 <Text style={styles.contactTitle}>{contact.title}</Text>
-                <Text style={styles.contactName}>{contact.name}</Text>
               </View>
-              <TouchableOpacity
-                style={styles.callButton}
-                onPress={() => handleCall(contact.mobile)}
-                activeOpacity={0.8}
-              >
-                <Ionicons name="call" size={16} color="#ffffff" />
-                <Text style={styles.callButtonText}>{contact.mobile}</Text>
-              </TouchableOpacity>
+              {contact.mobile ? (
+                <TouchableOpacity
+                  style={styles.callButton}
+                  onPress={() => handleCall(contact.mobile)}
+                  activeOpacity={0.8}
+                >
+                  <Ionicons name="call" size={16} color="#ffffff" />
+                  <Text style={styles.callButtonText}>{contact.mobile}</Text>
+                </TouchableOpacity>
+              ) : (
+                <Text style={styles.noNumberText}>—</Text>
+              )}
             </TouchableOpacity>
           ))}
         </View>
@@ -270,11 +221,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
     color: '#1f2937',
-    marginBottom: 2,
   },
-  contactName: {
-    fontSize: 13,
-    color: '#6b7280',
+  noNumberText: {
+    fontSize: 14,
+    color: '#9ca3af',
+    fontWeight: '500',
   },
   callButton: {
     flexDirection: 'row',

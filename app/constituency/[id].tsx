@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -53,6 +53,7 @@ const CONSTITUENCY_DATA: Record<string, {
   ro: Person;
   aro: Person;
   color: string;
+  mapLink?: string;
   candidates: Candidate[];
   coordinator: Person[];
   magistrates: Person[];
@@ -412,6 +413,7 @@ const CONSTITUENCY_DATA: Record<string, {
     ro: { name: 'মোহাম্মদ মাসুদুর রহমান মোল্লা', designation: 'জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট', mobile: '০১৭১৮৪৪৪০৯০' },
     aro: { name: 'সৈয়দা ইয়াসমিন সুলতানা', designation: 'উপজেলা নির্বাহী অফিসার', mobile: '০১৭৬২৬৯৫০৭২', image: UNO_IMAGES.gobindaganj },
     color: '#0e7490',
+    mapLink: 'https://drive.google.com/file/d/1b2JWmOY8vkinEFOCrtegNVcPLsnM5U0M/view?usp=sharing',
     candidates: [
       { name: 'মোঃ ফজলুল হক', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
       { name: 'মোঃ হাসান মাহমুদ', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
@@ -848,6 +850,22 @@ export default function ConstituencyDetailScreen() {
           />
         </View>
 
+        {/* Map Hardcopy Button */}
+        {data.mapLink && (
+          <Pressable
+            style={({ pressed }) => [
+              styles.mapButton,
+              { backgroundColor: data.color },
+              pressed && { opacity: 0.9 },
+            ]}
+            onPress={() => Linking.openURL(data.mapLink!)}
+          >
+            <Ionicons name="map" size={24} color="#ffffff" />
+            <Text style={styles.mapButtonText}>{data.areaName} ম্যাপের হার্ডকপি</Text>
+            <Ionicons name="open-outline" size={22} color="#ffffff" />
+          </Pressable>
+        )}
+
         {/* Expandable Sections */}
         <View style={styles.sectionsContainer}>
           <Text style={styles.sectionGroupTitle}>আরও তথ্য দেখুন</Text>
@@ -860,7 +878,7 @@ export default function ConstituencyDetailScreen() {
           />
           
           <ExpandableSection
-            title="নির্বাচনকালীন দায়িত্বপ্রাপ্ত নির্বাহী ম্যাজিস্ট্রেট"
+            title="দায়িত্বপ্রাপ্ত এক্সিকিউটিভ ম্যাজিস্ট্রেট"
             subtitle="নির্বাচনকালীন ম্যাজিস্ট্রেটদের তালিকা"
             color={data.color}
             data={data.magistrates}
@@ -977,6 +995,22 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   importantButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+    marginHorizontal: 12,
+    flex: 1,
+  },
+  mapButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    borderRadius: 14,
+    marginBottom: 16,
+  },
+  mapButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '700',

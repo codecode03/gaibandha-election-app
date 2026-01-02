@@ -7,7 +7,7 @@ import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const CODE_OF_CONDUCT_PDF_URL = 'https://drive.google.com/file/d/1lRLTtNTTwLNqUQT1bcmFkwqgDko4FdLj/view?usp=sharing';
+const CODE_OF_CONDUCT_PDF_URL = 'https://drive.google.com/file/d/1uIw4FozbXvTdrBTNNhji3KZez0-w9tub/view?usp=sharing';
 
 // Color utility to create light background from accent color
 const getLightBg = (color: string) => {
