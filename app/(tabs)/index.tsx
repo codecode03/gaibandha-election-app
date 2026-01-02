@@ -70,6 +70,12 @@ export default function HomeScreen() {
       case 'committees':
         router.push('/committees');
         break;
+      case 'code-of-conduct':
+        router.push('/code-of-conduct');
+        break;
+      case 'mobile-court-law':
+        router.push('/mobile-court-law');
+        break;
       default:
         console.log(`Navigate to: ${screen}`);
     }
@@ -279,7 +285,7 @@ const styles = StyleSheet.create({
   },
   headerContent: {
     paddingTop: 20,
-    paddingBottom: 50,
+    paddingBottom: 32,
     paddingHorizontal: 24,
     alignItems: 'center',
     zIndex: 1,

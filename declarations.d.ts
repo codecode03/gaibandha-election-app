@@ -5,6 +5,11 @@ declare module '*.svg' {
   export default content;
 }
 
+declare module '*.pdf' {
+  const content: number;
+  export default content;
+}
+
 
 
 
