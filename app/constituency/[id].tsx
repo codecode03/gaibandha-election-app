@@ -79,7 +79,6 @@ const CONSTITUENCY_DATA: Record<string, {
     mapLink: 'https://drive.google.com/file/d/1SYdbaxOwbWOOllztsoknQYDvZPcYMPlQ/view?usp=sharing',
     candidates: [
       { name: 'মোঃ শফিকুল ইসলাম', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
-      { name: 'মোঃ আব্দুর রহমান', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
       { name: 'মোঃ কামরুল হাসান', party: 'জাতীয় পার্টি', symbol: 'লাঙ্গল' },
       { name: 'মোঃ নজরুল ইসলাম', party: 'জামায়াতে ইসলামী', symbol: 'দাঁড়িপাল্লা' },
       { name: 'মোঃ ফারুক আহমেদ', party: 'বাংলাদেশ কল্যাণ পার্টি', symbol: 'আম' },
@@ -147,7 +146,6 @@ const CONSTITUENCY_DATA: Record<string, {
     mapLink: 'https://drive.google.com/file/d/1K433LWBvpsa8l_PH4ggb4qhMEULbKEQg/view?usp=sharing',
     candidates: [
       { name: 'মোঃ নজরুল ইসলাম', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
-      { name: 'মোঃ জাহিদুল ইসলাম', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
       { name: 'মোঃ আলমগীর হোসেন', party: 'জাতীয় পার্টি', symbol: 'লাঙ্গল' },
       { name: 'মোঃ শামসুল আলম', party: 'জামায়াতে ইসলামী', symbol: 'দাঁড়িপাল্লা' },
       { name: 'মোঃ রবিউল ইসলাম', party: 'বাংলাদেশ কল্যাণ পার্টি', symbol: 'আম' },
@@ -216,7 +214,6 @@ const CONSTITUENCY_DATA: Record<string, {
     color: '#6d28d9',
     candidates: [
       { name: 'মোঃ সাইফুল ইসলাম', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
-      { name: 'মোঃ রফিকুল ইসলাম', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
       { name: 'মোঃ তারেক রহমান', party: 'জাতীয় পার্টি', symbol: 'লাঙ্গল' },
       { name: 'মোঃ আব্দুল কাদের', party: 'জামায়াতে ইসলামী', symbol: 'দাঁড়িপাল্লা' },
       { name: 'মোঃ সেলিম রেজা', party: 'বাংলাদেশ কল্যাণ পার্টি', symbol: 'আম' },
@@ -287,7 +284,6 @@ const CONSTITUENCY_DATA: Record<string, {
     color: '#6d28d9',
     candidates: [
       { name: 'মোঃ সাইফুল ইসলাম', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
-      { name: 'মোঃ রফিকুল ইসলাম', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
       { name: 'মোঃ তারেক রহমান', party: 'জাতীয় পার্টি', symbol: 'লাঙ্গল' },
       { name: 'মোঃ আব্দুল কাদের', party: 'জামায়াতে ইসলামী', symbol: 'দাঁড়িপাল্লা' },
       { name: 'মোঃ সেলিম রেজা', party: 'বাংলাদেশ কল্যাণ পার্টি', symbol: 'আম' },
@@ -353,7 +349,6 @@ const CONSTITUENCY_DATA: Record<string, {
     mapLink: 'https://drive.google.com/file/d/1EfrVI1RF6xP4KyDZ7Li-B6YSUs66A_61/view?usp=sharing',
     candidates: [
       { name: 'মোঃ সাইফুল ইসলাম', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
-      { name: 'মোঃ রফিকুল ইসলাম', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
       { name: 'মোঃ তারেক রহমান', party: 'জাতীয় পার্টি', symbol: 'লাঙ্গল' },
       { name: 'মোঃ আব্দুল কাদের', party: 'জামায়াতে ইসলামী', symbol: 'দাঁড়িপাল্লা' },
       { name: 'মোঃ সেলিম রেজা', party: 'বাংলাদেশ কল্যাণ পার্টি', symbol: 'আম' },
@@ -419,7 +414,6 @@ const CONSTITUENCY_DATA: Record<string, {
     mapLink: 'https://drive.google.com/file/d/1PfuwGijJkEiHZ8l8MHAuCtVqKW1xf6Ju/view?usp=sharing',
     candidates: [
       { name: 'মোঃ ফজলুল হক', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
-      { name: 'মোঃ হাসান মাহমুদ', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
       { name: 'মোঃ আনিসুর রহমান', party: 'জাতীয় পার্টি', symbol: 'লাঙ্গল' },
       { name: 'মোঃ খালেকুজ্জামান', party: 'জামায়াতে ইসলামী', symbol: 'দাঁড়িপাল্লা' },
       { name: 'মোঃ আতিকুর রহমান', party: 'বাংলাদেশ কল্যাণ পার্টি', symbol: 'আম' },
@@ -497,7 +491,6 @@ const CONSTITUENCY_DATA: Record<string, {
     color: '#c2410c',
     candidates: [
       { name: 'মোঃ জাকির হোসেন', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
-      { name: 'মোঃ মোস্তাফিজুর রহমান', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
       { name: 'মোঃ বেলাল হোসেন', party: 'জাতীয় পার্টি', symbol: 'লাঙ্গল' },
       { name: 'মোঃ আব্দুল মতিন', party: 'জামায়াতে ইসলামী', symbol: 'দাঁড়িপাল্লা' },
       { name: 'মোঃ শাহাবুদ্দিন', party: 'বাংলাদেশ কল্যাণ পার্টি', symbol: 'আম' },
@@ -568,7 +561,6 @@ const CONSTITUENCY_DATA: Record<string, {
     mapLink: 'https://drive.google.com/file/d/1To3wXY8Rw1eXBCrtpDxL1n74812IJx8B/view?usp=sharing',
     candidates: [
       { name: 'মোঃ জাকির হোসেন', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
-      { name: 'মোঃ মোস্তাফিজুর রহমান', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
       { name: 'মোঃ বেলাল হোসেন', party: 'জাতীয় পার্টি', symbol: 'লাঙ্গল' },
       { name: 'মোঃ আব্দুল মতিন', party: 'জামায়াতে ইসলামী', symbol: 'দাঁড়িপাল্লা' },
       { name: 'মোঃ শাহাবুদ্দিন', party: 'বাংলাদেশ কল্যাণ পার্টি', symbol: 'আম' },
@@ -634,7 +626,6 @@ const CONSTITUENCY_DATA: Record<string, {
     color: '#c2410c',
     candidates: [
       { name: 'মোঃ জাকির হোসেন', party: 'বাংলাদেশ জাতীয়তাবাদী দল', symbol: 'ধানের শীষ' },
-      { name: 'মোঃ মোস্তাফিজুর রহমান', party: 'বাংলাদেশ আওয়ামী লীগ', symbol: 'নৌকা' },
       { name: 'মোঃ বেলাল হোসেন', party: 'জাতীয় পার্টি', symbol: 'লাঙ্গল' },
       { name: 'মোঃ আব্দুল মতিন', party: 'জামায়াতে ইসলামী', symbol: 'দাঁড়িপাল্লা' },
       { name: 'মোঃ শাহাবুদ্দিন', party: 'বাংলাদেশ কল্যাণ পার্টি', symbol: 'আম' },

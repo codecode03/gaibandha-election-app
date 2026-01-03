@@ -13,6 +13,7 @@ const COMMITTEE_ITEMS = [
     icon: 'eye',
     color: '#059669',
     bgColor: '#ecfdf5',
+    memberCount: 13,
   },
   {
     id: 'monitoring-committee',
@@ -21,6 +22,7 @@ const COMMITTEE_ITEMS = [
     icon: 'analytics',
     color: '#7c3aed',
     bgColor: '#f5f3ff',
+    memberCount: 0,
   },
   {
     id: 'law-order-cell',
@@ -29,13 +31,13 @@ const COMMITTEE_ITEMS = [
     icon: 'shield',
     color: '#dc2626',
     bgColor: '#fef2f2',
+    memberCount: 13,
   },
 ];
 
 export default function CommitteesScreen() {
   const handleNavigation = (id: string) => {
-    console.log(`Navigate to: ${id}`);
-    // Future: router.push(`/committee/${id}`);
+    router.push(`/committee/${id}`);
   };
 
   return (
@@ -72,7 +74,7 @@ export default function CommitteesScreen() {
 
         {/* Committee List */}
         <View style={styles.menuSection}>
-          {COMMITTEE_ITEMS.map((item, index) => (
+          {COMMITTEE_ITEMS.map((item) => (
             <Pressable 
               key={item.id}
               style={({ pressed }) => [
@@ -88,6 +90,11 @@ export default function CommitteesScreen() {
               <View style={styles.menuContent}>
                 <Text style={styles.menuTitle}>{item.title}</Text>
                 <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
+                {item.memberCount > 0 && (
+                  <Text style={[styles.memberCount, { color: item.color }]}>
+                    {item.memberCount} জন সদস্য
+                  </Text>
+                )}
               </View>
               <View style={styles.menuArrow}>
                 <Ionicons name="chevron-forward" size={20} color="#d1d5db" />
@@ -231,6 +238,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#9ca3af',
   },
+  memberCount: {
+    fontSize: 12,
+    fontWeight: '600',
+    marginTop: 4,
+  },
   menuArrow: {
     width: 32,
     height: 32,
@@ -256,4 +268,3 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-
