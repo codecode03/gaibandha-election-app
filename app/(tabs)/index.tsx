@@ -110,7 +110,7 @@ export default function HomeScreen() {
         
         {/* Header Content */}
         <View style={[styles.headerContent, { paddingTop: insets.top + 12 }]}>
-          <Text style={styles.headerTopText}>ত্রয়দশ জাতীয় সংসদ নির্বাচন</Text>
+          <Text style={styles.headerTopText}>ত্রয়োদশ জাতীয় সংসদ নির্বাচন</Text>
           
           {/* Logo */}
           <View style={styles.logoBox}>

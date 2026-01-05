@@ -46,7 +46,7 @@ export default function CodeOfConductScreen() {
 
           {/* PDF Title */}
           <Text style={styles.pdfTitle}>নির্বাচনী আচরণবিধি ২০২৫</Text>
-          <Text style={styles.pdfSubtitle}>ত্রয়দশ জাতীয় সংসদ নির্বাচন</Text>
+          <Text style={styles.pdfSubtitle}>ত্রয়োদশ জাতীয় সংসদ নির্বাচন</Text>
 
           {/* PDF Info */}
           <View style={styles.pdfInfo}>
@@ -83,7 +83,7 @@ export default function CodeOfConductScreen() {
         <View style={styles.descriptionCard}>
           <Text style={styles.descriptionTitle}>বিবরণ</Text>
           <Text style={styles.descriptionText}>
-            এই পিডিএফ ফাইলে ত্রয়দশ জাতীয় সংসদ নির্বাচনের জন্য নির্ধারিত আচরণবিধি সম্পর্কে বিস্তারিত তথ্য রয়েছে। 
+            এই পিডিএফ ফাইলে ত্রয়োদশ জাতীয় সংসদ নির্বাচনের জন্য নির্ধারিত আচরণবিধি সম্পর্কে বিস্তারিত তথ্য রয়েছে। 
             নির্বাচনে অংশগ্রহণকারী সকল প্রার্থী, দল এবং সংশ্লিষ্ট ব্যক্তিদের এই বিধিমালা মেনে চলা বাধ্যতামূলক।
           </Text>
         </View>
